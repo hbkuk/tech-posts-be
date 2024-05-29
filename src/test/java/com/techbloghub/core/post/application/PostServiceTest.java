@@ -1,12 +1,11 @@
 package com.techbloghub.core.post.application;
 
-import static com.techbloghub.core.blog.company.domain.Company.우아한형제들;
+import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.techbloghub.common.util.ApplicationTest;
-import com.techbloghub.core.blog.post.application.PostService;
-import com.techbloghub.core.blog.post.domain.Post;
-import com.techbloghub.core.blog.post.domain.PostRepository;
+import com.techbloghub.core.post.domain.Post;
+import com.techbloghub.core.post.domain.PostRepository;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
