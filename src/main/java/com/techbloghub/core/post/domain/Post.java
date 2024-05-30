@@ -1,7 +1,7 @@
-package com.techbloghub.core.blog.post.domain;
+package com.techbloghub.core.post.domain;
 
 import com.techbloghub.common.domain.base.BaseEntity;
-import com.techbloghub.core.blog.company.domain.Company;
+import com.techbloghub.core.blog.domain.Blog;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,17 +20,17 @@ public class Post extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Company company;
+  private Blog blog;
 
-  private String url;
+  private String link;
 
   private String title;
 
   private LocalDateTime postedAt;
 
-  public Post(Company company, String url, String title, LocalDateTime postedAt) {
-    this.company = company;
-    this.url = url;
+  public Post(Blog blog, String link, String title, LocalDateTime postedAt) {
+    this.blog = blog;
+    this.link = link;
     this.title = title;
     this.postedAt = postedAt;
   }

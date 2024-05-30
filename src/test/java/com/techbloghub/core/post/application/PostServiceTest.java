@@ -1,6 +1,6 @@
 package com.techbloghub.core.post.application;
 
-import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
+import static com.techbloghub.core.blog.fixture.Blog.우아한형제들;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.techbloghub.common.util.ApplicationTest;

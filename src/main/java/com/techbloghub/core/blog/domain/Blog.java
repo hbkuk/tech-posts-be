@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum CompanyBlog {
+public enum Blog {
 
   카카오("KAKAO","https://tech.kakao.com/feed/"),
   라인( "LINE", "https://techblog.lycorp.co.jp/ko/feed/index.xml"),
