@@ -48,6 +48,9 @@ dependencies {
 
 	// password crypto
 	implementation 'org.springframework.security:spring-security-crypto:5.7.1'
+
+	// rss reader
+	implementation 'com.apptasticsoftware:rssreader:3.6.0'
 }
 
 test {
