@@ -1,11 +1,14 @@
 package com.techbloghub.common.util;
 
 import com.techbloghub.common.util.converter.DateConverter;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.text.ParseException;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DateConverterTest {
@@ -24,5 +27,17 @@ public class DateConverterTest {
 
         // then
         assertEquals(ISO_8601_타입의_날짜_문자열, ISO_8601_타입으로_변환된_날짜);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Invalid Date", "Error", "null"})
+    @DisplayName("날짜 데이터가 아닌 경우 파싱 예외가 발생한다.")
+    void 날짜_데이터가_아닌_경우_파싱_예외_발생(String 날짜_데이터가_아닌_문자열) {
+
+        // when, then
+        assertThatExceptionOfType(ParseException.class)
+                .isThrownBy(() -> {
+                    DateConverter.convertRfc822ToIso8601(날짜_데이터가_아닌_문자열);
+                });
     }
 }
