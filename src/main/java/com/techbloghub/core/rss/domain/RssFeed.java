@@ -5,6 +5,7 @@ import com.techbloghub.common.util.converter.DateConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -33,10 +34,6 @@ public class RssFeed {
         this.description = getDescriptionOrDefault(feed.getDescription());
     }
 
-    public static RssFeed of(String link, String title, LocalDateTime publishAt, String description) {
-        return new RssFeed(link, title, publishAt, description); // TODO: 정적 팩토리 메서드는 삭제해야겠다..
-    }
-
     private static void validateFeed(Item feedItem) {
         if (feedItem.getLink().isEmpty()) {
             throw new IllegalArgumentException("피드를 생성하기 위해서는 링크는 반드시 포함되어야 합니다.");
@@ -46,12 +43,20 @@ public class RssFeed {
         }
     }
 
-    private static String getDescriptionOrDefault(Optional<String> feed) {
-        return feed.orElse("");
+    public static String getDescriptionOrDefault(Optional<String> description) {
+        // TODO Data truncation: Data too long for column 'description' at row 1 ==> 해결...
+        return description.orElse("");
     }
 
-    private static LocalDateTime getPublishDateOrNow(Optional<String> feed) {
-        return feed.map(pubDate -> LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(pubDate)))
+    public static LocalDateTime getPublishDateOrNow(Optional<String> publishDate) {
+        return publishDate.map(pubDate -> {
+                    try {
+                        return LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(pubDate));
+                    } catch (ParseException e) {
+                        log.error("Error parsing", e);
+                        return LocalDateTime.now();
+                    }
+                })
                 .orElseGet(() -> LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
     }
 }

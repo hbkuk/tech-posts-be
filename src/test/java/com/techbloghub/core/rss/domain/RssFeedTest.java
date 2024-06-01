@@ -6,8 +6,12 @@ import com.techbloghub.common.util.converter.DateConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -120,5 +124,47 @@ public class RssFeedTest {
                 }
             }
         }
+    }
+
+    @Nested
+    class 발행_일자_가져오기 {
+
+        @DisplayName("피드 아이템의 발행 일자가 ISO-8601 타입일 경우 RFC-882 타입으로 변환된다.")
+        @ParameterizedTest
+        @CsvSource(value = {
+                "Thu, 18 Jul 2019 18:00:00 +0900$2019-07-18T18:00:00",
+                "Mon, 01 Jan 2020 00:00:00 +0900$2020-01-01T00:00:00",
+                "Wed, 25 Dec 2019 12:30:00 +0900$2019-12-25T12:30:00",
+                "Sun, 15 Mar 2020 23:45:00 +0900$2020-03-15T23:45:00",
+                "Fri, 10 Apr 2020 09:15:00 +0900$2020-04-10T09:15:00"
+        }, delimiter = '$')
+        void 발행_일자를_RFC_882_타입으로_변환(String RFC_822_타입의_날짜_문자열, String ISO_8601_타입의_날짜_문자열) {
+            // when
+            LocalDateTime ISO_8601_타입으로_변환된_날짜 = RssFeed.getPublishDateOrNow(Optional.of(RFC_822_타입의_날짜_문자열));
+
+            // then
+            assertEquals(LocalDateTime.parse(ISO_8601_타입의_날짜_문자열), ISO_8601_타입으로_변환된_날짜);
+        }
+
+        @DisplayName("피드 아이템의 발행 일자가 날짜 데이터가 아닌 문자열일 경우 현재 날짜로 변환된다.")
+        @ValueSource(strings = {"Invalid Date", "Error", "null"})
+        @ParameterizedTest
+        void 날짜_데이터가_아닌_경우_현재_날짜로_변환(String 날짜_데이터가_아닌_문자열) {
+            // when
+            LocalDateTime 변환된_데이터 = RssFeed.getPublishDateOrNow(Optional.of(날짜_데이터가_아닌_문자열));
+
+            // then
+            assertEquals(LocalDateTime.now(), 변환된_데이터);
+        }
+    }
+
+    @Nested
+    class 피드_설명 {
+
+        // TODO 1: 설명으로 정확히 변경
+
+        // TODO 2: 너무 길면 알아서 짧아짐
+
+        // TODO 3: 비어있다면 빈 문자열로
     }
 }
