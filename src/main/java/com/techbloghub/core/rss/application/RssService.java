@@ -21,38 +21,43 @@ public class RssService {
 
     private final PostService postService;
 
+    private static PostCreateRequest convertPostCreateRequest(Blog blog, RssFeed rssFeed) {
+        return PostCreateRequest.of(
+                blog,
+                rssFeed.getLink(),
+                rssFeed.getTitle(),
+                rssFeed.getPublishAt(),
+                rssFeed.getDescription()
+        );
+    }
+
     @Transactional
     public void syncFeeds(Blog blog) {
         List<RssFeed> rssFeeds = rssFeedReader.read(blog.getBlogUrl());
-
         Optional<LocalDateTime> latestPublishDate = postService.getLatestPublishDate(blog);
 
-        if (latestPublishDate.isEmpty()) {
-            List<PostCreateRequest> createRequests = rssFeeds.stream()
-                    .map(rssFeed -> PostCreateRequest.of(
-                            blog,
-                            rssFeed.getLink(),
-                            rssFeed.getTitle(),
-                            rssFeed.getPublishAt(),
-                            rssFeed.getDescription()
-                    )).collect(Collectors.toList());
-
+        List<PostCreateRequest> createRequests = getPostCreateRequests(blog, rssFeeds, latestPublishDate);
+        if (!createRequests.isEmpty()) {
             postService.registerPost(createRequests);
-        } else {
-            List<PostCreateRequest> createRequests = rssFeeds.stream()
-                    .filter(rssFeed -> rssFeed.getPublishAt().isAfter(latestPublishDate.get()))
-                    .map(rssFeed -> PostCreateRequest.of(
-                            blog,
-                            rssFeed.getLink(),
-                            rssFeed.getTitle(),
-                            rssFeed.getPublishAt(),
-                            rssFeed.getDescription()
-                    ))
-                    .collect(Collectors.toList());
-
-            if (!createRequests.isEmpty()) {
-                postService.registerPost(createRequests);
-            }
         }
+    }
+
+    private List<PostCreateRequest> getPostCreateRequests(Blog blog, List<RssFeed> rssFeeds, Optional<LocalDateTime> latestPublishDate) {
+        return latestPublishDate
+                .map(date -> filterAndConvertRssFeeds(blog, rssFeeds, date))
+                .orElseGet(() -> convertAllRssFeeds(blog, rssFeeds));
+    }
+
+    private List<PostCreateRequest> filterAndConvertRssFeeds(Blog blog, List<RssFeed> rssFeeds, LocalDateTime latestPublishDate) {
+        return rssFeeds.stream()
+                .filter(rssFeed -> rssFeed.getPublishAt().isAfter(latestPublishDate))
+                .map(rssFeed -> convertPostCreateRequest(blog, rssFeed))
+                .collect(Collectors.toList());
+    }
+
+    private List<PostCreateRequest> convertAllRssFeeds(Blog blog, List<RssFeed> rssFeeds) {
+        return rssFeeds.stream()
+                .map(rssFeed -> convertPostCreateRequest(blog, rssFeed))
+                .collect(Collectors.toList());
     }
 }
