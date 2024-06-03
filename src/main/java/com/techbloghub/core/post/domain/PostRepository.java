@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("SELECT post FROM Post post WHERE post.blog = :blog ORDER BY post.publishAt DESC")
+    @Query("SELECT post FROM Post post WHERE post.blog = :blog AND post.publishAt = (SELECT MAX(p.publishAt) FROM Post p WHERE p.blog = :blog)")
     Optional<Post> findLatestPost(@Param("blog") Blog blog);
 }
