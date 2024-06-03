@@ -17,6 +17,8 @@ import java.util.Optional;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RssFeed {
 
+    public static final int MAX_DESCRIPTION_LENGTH = 67;
+
     private String link;
 
     private String title;
@@ -44,13 +46,16 @@ public class RssFeed {
     }
 
     public static String getDescriptionOrDefault(Optional<String> description) {
-        if (description.isEmpty()) {
-            return "";
+        return description
+                .map(RssFeed::getDescription)
+                .orElse("");
+    }
+
+    private static String getDescription(String desc) {
+        if (desc.length() < MAX_DESCRIPTION_LENGTH) {
+            return desc;
         }
-        if (description.get().length() < 67) {
-            return description.get();
-        }
-        return description.get().substring(0, 67) + "...";
+        return desc.substring(0, MAX_DESCRIPTION_LENGTH) + "...";
     }
 
     public static LocalDateTime getPublishDateOrNow(Optional<String> publishDate) {
