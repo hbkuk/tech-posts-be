@@ -154,7 +154,7 @@ public class RssFeedTest {
             LocalDateTime 변환된_데이터 = RssFeed.getPublishDateOrNow(Optional.of(날짜_데이터가_아닌_문자열));
 
             // then
-            assertEquals(LocalDateTime.now(), 변환된_데이터);
+            assertEquals(LocalDateTime.now().withSecond(0).withNano(0), 변환된_데이터);
         }
     }
 

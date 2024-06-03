@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Getter
@@ -64,9 +63,9 @@ public class RssFeed {
                         return LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(pubDate));
                     } catch (ParseException e) {
                         log.error("Error parsing", e);
-                        return LocalDateTime.now();
+                        return LocalDateTime.now().withSecond(0).withNano(0);
                     }
                 })
-                .orElseGet(() -> LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+                .orElseGet(() -> LocalDateTime.now().withSecond(0).withNano(0));
     }
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
@@ -33,7 +32,7 @@ public class PostServiceTest extends ApplicationTest {
             Post 우형_게시글 = new Post(우아한형제들,
                     "https://techblog.woowahan.com/17713/",
                     "[신청 시작] 6월 우아한테크세미나 : 글로벌 개발자로 성장하는 법",
-                    LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS),
+                    LocalDateTime.now().withSecond(0).withNano(0),
                     "");
 
             // when
