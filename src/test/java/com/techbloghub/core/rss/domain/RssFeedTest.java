@@ -159,12 +159,41 @@ public class RssFeedTest {
     }
 
     @Nested
-    class 피드_설명 {
+    class 피드_설명_가져오기 {
 
-        // TODO 1: 설명으로 정확히 변경
+        @Test
+        void 피드_설명_그대로_가져오기() {
+            // given
+            String 피드_설명 = "보완재 추천 모델을 서빙하기 위한 아키텍처 소개";
 
-        // TODO 2: 너무 길면 알아서 짧아짐
+            // when
+            String 가져온_피드_설명 = RssFeed.getDescriptionOrDefault(Optional.of(피드_설명));
 
-        // TODO 3: 비어있다면 빈 문자열로
+            // then
+            assertEquals(피드_설명, 가져온_피드_설명);
+        }
+
+        @DisplayName("피드의 설명이 길 경우, 일부 설명은 생략된다.")
+        @Test
+        void 긴_피드_설명일_경우_일부_문자열은_생략() {
+            // given
+            String 기존_피드_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프카를 기반으로 한 다양한 기술적 개념에 대해서 얇고 넓게 소개합니다.";
+
+            // when
+            String 생략된_설명 = RssFeed.getDescriptionOrDefault(Optional.of(기존_피드_설명));
+
+            // then
+            String 예상되는_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프...";
+            assertEquals(예상되는_설명, 생략된_설명);
+        }
+
+        @Test
+        void 설명이_없을_경우_빈_문자열() {
+            // when
+            String 비어있는_설명 = RssFeed.getDescriptionOrDefault(Optional.empty());
+
+            // then
+            assertEquals("", 비어있는_설명);
+        }
     }
 }

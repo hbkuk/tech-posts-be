@@ -44,8 +44,13 @@ public class RssFeed {
     }
 
     public static String getDescriptionOrDefault(Optional<String> description) {
-        // TODO Data truncation: Data too long for column 'description' at row 1 ==> 해결...
-        return description.orElse("");
+        if (description.isEmpty()) {
+            return "";
+        }
+        if (description.get().length() < 67) {
+            return description.get();
+        }
+        return description.get().substring(0, 67) + "...";
     }
 
     public static LocalDateTime getPublishDateOrNow(Optional<String> publishDate) {
