@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -127,7 +126,7 @@ public class RssFeedTest {
     }
 
     @Nested
-    class 발행_일자_가져오기 {
+    class 피드의_발행_일자_가져오기 {
 
         @DisplayName("피드 아이템의 발행 일자가 ISO-8601 타입일 경우 RFC-882 타입으로 변환된다.")
         @ParameterizedTest
@@ -139,22 +138,36 @@ public class RssFeedTest {
                 "Fri, 10 Apr 2020 09:15:00 +0900$2020-04-10T09:15:00"
         }, delimiter = '$')
         void 발행_일자를_RFC_882_타입으로_변환(String RFC_822_타입의_날짜_문자열, String ISO_8601_타입의_날짜_문자열) {
+            // given
+            Item 피드_아이템 = new Item(new DateTime());
+            피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+            피드_아이템.setDescription("보완재 추천 모델을 서빙하기 위한 아키텍처 소개");
+            피드_아이템.setPubDate(RFC_822_타입의_날짜_문자열);
+            피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
+
             // when
-            LocalDateTime ISO_8601_타입으로_변환된_날짜 = RssFeed.getPublishDateOrNow(Optional.of(RFC_822_타입의_날짜_문자열));
+            RssFeed 피드 = new RssFeed(피드_아이템);
 
             // then
-            assertEquals(LocalDateTime.parse(ISO_8601_타입의_날짜_문자열), ISO_8601_타입으로_변환된_날짜);
+            assertEquals(LocalDateTime.parse(ISO_8601_타입의_날짜_문자열), 피드.getPublishAt());
         }
 
         @DisplayName("피드 아이템의 발행 일자가 날짜 데이터가 아닌 문자열일 경우 현재 날짜로 변환된다.")
         @ValueSource(strings = {"Invalid Date", "Error", "null"})
         @ParameterizedTest
         void 날짜_데이터가_아닌_경우_현재_날짜로_변환(String 날짜_데이터가_아닌_문자열) {
+            // given
+            Item 피드_아이템 = new Item(new DateTime());
+            피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+            피드_아이템.setDescription("보완재 추천 모델을 서빙하기 위한 아키텍처 소개");
+            피드_아이템.setPubDate(날짜_데이터가_아닌_문자열);
+            피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
+
             // when
-            LocalDateTime 변환된_데이터 = RssFeed.getPublishDateOrNow(Optional.of(날짜_데이터가_아닌_문자열));
+            RssFeed 피드 = new RssFeed(피드_아이템);
 
             // then
-            assertEquals(LocalDateTime.now().withSecond(0).withNano(0), 변환된_데이터);
+            assertEquals(LocalDateTime.now().withSecond(0).withNano(0), 피드.getPublishAt());
         }
     }
 
@@ -166,34 +179,52 @@ public class RssFeedTest {
             // given
             String 피드_설명 = "보완재 추천 모델을 서빙하기 위한 아키텍처 소개";
 
+            Item 피드_아이템 = new Item(new DateTime());
+            피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+            피드_아이템.setDescription(피드_설명);
+            피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
+            피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
+
             // when
-            String 가져온_피드_설명 = RssFeed.getDescriptionOrDefault(Optional.of(피드_설명));
+            RssFeed 피드 = new RssFeed(피드_아이템);
 
             // then
-            assertEquals(피드_설명, 가져온_피드_설명);
+            assertEquals(피드_설명, 피드.getDescription());
         }
 
         @DisplayName("피드의 설명이 길 경우, 일부 설명은 생략된다.")
         @Test
         void 긴_피드_설명일_경우_일부_문자열은_생략() {
             // given
-            String 기존_피드_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프카를 기반으로 한 다양한 기술적 개념에 대해서 얇고 넓게 소개합니다.";
+            String 피드_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프카를 기반으로 한 다양한 기술적 개념에 대해서 얇고 넓게 소개합니다.";
+
+            Item 피드_아이템 = new Item(new DateTime());
+            피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+            피드_아이템.setDescription(피드_설명);
+            피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
+            피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
 
             // when
-            String 생략된_설명 = RssFeed.getDescriptionOrDefault(Optional.of(기존_피드_설명));
+            RssFeed 피드 = new RssFeed(피드_아이템);
 
             // then
             String 예상되는_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프...";
-            assertEquals(예상되는_설명, 생략된_설명);
+            assertEquals(예상되는_설명, 피드.getDescription());
         }
 
         @Test
         void 설명이_없을_경우_빈_문자열() {
+            // given
+            Item 피드_아이템 = new Item(new DateTime());
+            피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+            피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
+            피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
+
             // when
-            String 비어있는_설명 = RssFeed.getDescriptionOrDefault(Optional.empty());
+            RssFeed 피드 = new RssFeed(피드_아이템);
 
             // then
-            assertEquals("", 비어있는_설명);
+            assertEquals("", 피드.getDescription());
         }
     }
 }
