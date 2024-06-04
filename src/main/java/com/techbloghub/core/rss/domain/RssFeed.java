@@ -4,6 +4,7 @@ import com.apptasticsoftware.rssreader.Item;
 import com.techbloghub.common.util.converter.DateConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -27,12 +28,15 @@ public class RssFeed {
     private String description;
 
     public RssFeed(Item feed) {
-        validateFeed(feed);
-
-        this.link = getLink(feed);
-        this.title = getTitle(feed);
+        this.link = getLink(feed.getLink());
+        this.title = getTitle(feed.getTitle());
         this.publishAt = getPublishDateOrNow(feed.getPubDate());
         this.description = getDescriptionOrDefault(feed.getDescription());
+    }
+
+    private String getFilteredContent(String content) { // TODO: Util 클래스로 메서드 이동
+        String filteredContent = content.replaceAll("(?s)<script[^>]*>.*?</script>", "");
+        return StringEscapeUtils.unescapeHtml4(filteredContent).replaceAll("<[^>]*>", "");
     }
 
     private String getDescriptionOrDefault(Optional<String> description) {
@@ -43,9 +47,9 @@ public class RssFeed {
 
     private String getDescription(String desc) {
         if (desc.length() < MAX_DESCRIPTION_LENGTH) {
-            return desc;
+            return getFilteredContent(desc);
         }
-        return desc.substring(0, MAX_DESCRIPTION_LENGTH) + "...";
+        return getFilteredContent(desc.substring(0, MAX_DESCRIPTION_LENGTH)) + "...";
     }
 
     private LocalDateTime getPublishDateOrNow(Optional<String> publishDate) {
@@ -62,20 +66,18 @@ public class RssFeed {
         }
     }
 
-    private String getTitle(Item feed) {
-        return feed.getTitle().get();
-    }
-
-    private String getLink(Item feed) {
-        return feed.getLink().get();
-    }
-
-    private void validateFeed(Item feedItem) {
-        if (feedItem.getLink().isEmpty()) {
-            throw new IllegalArgumentException("피드를 생성하기 위해서는 링크는 반드시 포함되어야 합니다.");
-        }
-        if (feedItem.getTitle().isEmpty()) {
+    private String getTitle(Optional<String> title) {
+        if (title.isEmpty()) {
             throw new IllegalArgumentException("피드를 생성하기 위해서는 타이틀은 반드시 포함되어야 합니다.");
         }
+
+        return getFilteredContent(title.get());
+    }
+
+    private String getLink(Optional<String> link) {
+        if (link.isEmpty()) {
+            throw new IllegalArgumentException("피드를 생성하기 위해서는 링크는 반드시 포함되어야 합니다.");
+        }
+        return link.get();
     }
 }
