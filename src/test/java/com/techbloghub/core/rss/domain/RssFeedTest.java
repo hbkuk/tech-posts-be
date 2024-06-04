@@ -2,7 +2,7 @@ package com.techbloghub.core.rss.domain;
 
 import com.apptasticsoftware.rssreader.DateTime;
 import com.apptasticsoftware.rssreader.Item;
-import com.techbloghub.common.util.converter.DateConverter;
+import com.techbloghub.common.util.DateConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

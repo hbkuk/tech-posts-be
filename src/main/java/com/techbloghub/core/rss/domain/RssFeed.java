@@ -1,14 +1,15 @@
 package com.techbloghub.core.rss.domain;
 
 import com.apptasticsoftware.rssreader.Item;
-import com.techbloghub.common.util.converter.DateConverter;
+import com.techbloghub.common.util.DateConverter;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static com.techbloghub.common.util.StringUtil.getFilteredContent;
 
 @Getter
 @EqualsAndHashCode
@@ -32,11 +33,6 @@ public class RssFeed {
         this.title = getTitle(feed.getTitle());
         this.publishAt = getPublishDateOrNow(feed.getPubDate());
         this.description = getDescriptionOrDefault(feed.getDescription());
-    }
-
-    private String getFilteredContent(String content) { // TODO: Util 클래스로 메서드 이동
-        String filteredContent = content.replaceAll("(?s)<script[^>]*>.*?</script>", "");
-        return StringEscapeUtils.unescapeHtml4(filteredContent).replaceAll("<[^>]*>", "");
     }
 
     private String getDescriptionOrDefault(Optional<String> description) {

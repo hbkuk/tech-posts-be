@@ -1,4 +1,4 @@
-package com.techbloghub.common.util.converter;
+package com.techbloghub.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 
