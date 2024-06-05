@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+        jdbc:
+          batch_size: 100
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?rewriteBatchedStatements=true
+    username: root
+    password: root132!
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    org.hibernate.type.descriptor.sql: trace
+
+rss:
+  cron: "0 * * * * *"

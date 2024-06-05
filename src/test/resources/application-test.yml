@@ -1,16 +1,10 @@
-spring:
-  profiles:
-    active: dev
-
----
-
 server:
   port: 8080
 
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: test
 
   jpa:
     hibernate:

@@ -1,16 +1,10 @@
-spring:
-  profiles:
-    active: test
-
----
-
 server:
   port: 8080
 
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: prod
 
   jpa:
     hibernate:
@@ -34,3 +28,6 @@ logging:
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
     org.hibernate.type.descriptor.sql: trace
+
+rss:
+  cron: "0 0 * * * *"
