@@ -29,8 +29,8 @@ public class PostAcceptanceTest extends AcceptanceTest {
 
         /**
          * given  게시글 더미 데이터를 생성한다.
-         * When  페이지 정보없이 게시글 목록을 요청할 경우
-         * Then  최신순으로 게시글 목록이 응답된다.
+         * When  조건 없이 게시글 목록을 요청할 경우
+         * Then  기본 설정된 조건으로 게시글 목록이 응답된다.
          */
         @Test
         void 페이지_정보_없이_게시글_목록_요청() {
@@ -54,8 +54,8 @@ public class PostAcceptanceTest extends AcceptanceTest {
 
         /**
          * given  게시글 더미 데이터를 생성한다.
-         * When  페이지 정보를 포함해서 게시글 목록을 요청할 경우
-         * Then  페이지 정보 기반으로 최신순으로 게시글 목록이 응답된다.
+         * When  특정 조건을 포함해서 게시글 목록을 요청할 경우
+         * Then  특정 조건을 기반으로 게시글 목록이 응답된다.
          */
         @Test
         void 페이지_정보를_포함한_게시글_목록_요청() {
