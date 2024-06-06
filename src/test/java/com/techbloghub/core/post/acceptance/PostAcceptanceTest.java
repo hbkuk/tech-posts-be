@@ -1,31 +1,25 @@
 package com.techbloghub.core.post.acceptance;
 
 import com.techbloghub.common.util.AcceptanceTest;
+import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
+import static com.techbloghub.core.post.step.PostSteps.*;
 import static com.techbloghub.core.post.util.PostTestUtil.게시글_더미_데이터_생성;
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("게시글 인수 테스트")
 public class PostAcceptanceTest extends AcceptanceTest {
-
-    public static final int PAGEABLE_PAGE_DEFAULT_SIZE = 10;
 
     @Autowired
     PostRepository postRepository;
@@ -34,72 +28,62 @@ public class PostAcceptanceTest extends AcceptanceTest {
     class 게시글_목록 {
 
         /**
+         * given  게시글 더미 데이터를 생성한다.
          * When  페이지 정보없이 게시글 목록을 요청할 경우
          * Then  최신순으로 게시글 목록이 응답된다.
          */
         @Test
         void 페이지_정보_없이_게시글_목록_요청() {
             // given
-            List<Post> 생성된_게시글_데이터 = 게시글_더미_데이터_생성(우아한형제들, 20);
-            postRepository.saveAll(생성된_게시글_데이터);
+            var 생성된_게시글_데이터 = 게시글_더미_데이터_생성하기(우아한형제들, 20);
 
-            List<String> 저장된_게시글의_타이틀_목록 = 생성된_게시글_데이터.stream()
+            var 예상하는_응답된_게시글_제목_목록 = 생성된_게시글_데이터.stream()
                     .sorted(Comparator.comparing(Post::getPublishAt).reversed())
-                    .limit(PAGEABLE_PAGE_DEFAULT_SIZE)
+                    .limit(페이지_기본_사이즈)
                     .map(Post::getTitle)
                     .collect(Collectors.toList());
 
             // when
-            ExtractableResponse<Response> 게시글_목록_응답 = given().log().all()
-                    .when().log().all()
-                    .get("/posts")
-                    .then().log().all()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract();
+            var 응답된_게시글_목록 = 게시글_목록_요청();
 
             // then
-            List<String> 게시글의_타이틀_목록 = 게시글_목록_응답.jsonPath().getList("title", String.class);
-            assertThat(게시글의_타이틀_목록).isEqualTo(저장된_게시글의_타이틀_목록);
+            var 응답된_게시글_제목_목록 = 게시글_제목만_분류하기(응답된_게시글_목록);
+            assertThat(응답된_게시글_제목_목록).isEqualTo(예상하는_응답된_게시글_제목_목록);
         }
 
+
         /**
+         * given  게시글 더미 데이터를 생성한다.
          * When  페이지 정보를 포함해서 게시글 목록을 요청할 경우
          * Then  페이지 정보 기반으로 최신순으로 게시글 목록이 응답된다.
          */
         @Test
         void 페이지_정보를_포함한_게시글_목록_요청() {
             // given
-            List<Post> 생성된_게시글_데이터 = 게시글_더미_데이터_생성(우아한형제들, 100);
-            postRepository.saveAll(생성된_게시글_데이터);
+            var 생성된_게시글_데이터 = 게시글_더미_데이터_생성하기(우아한형제들, 100);
 
-            int size = 5;
-            int page = 1;
+            var 페이지_사이즈 = 5;
+            var 페이지_번호 = 1;
+            var 정렬_정보 = "publishAt,desc";
 
-            List<String> 저장된_게시글의_타이틀_목록 = 생성된_게시글_데이터.stream()
+            var 예상하는_응답된_게시글_제목_목록 = 생성된_게시글_데이터.stream()
                     .sorted(Comparator.comparing(Post::getPublishAt).reversed())
                     .skip(5)
-                    .limit(size)
+                    .limit(페이지_사이즈)
                     .map(Post::getTitle)
                     .collect(Collectors.toList());
 
             // when
-            Map<String, String> params = new HashMap<>();
-            params.put("size", String.valueOf(size));
-            params.put("page", String.valueOf(page));
-            params.put("sort", "publishAt,desc");
-
-            ExtractableResponse<Response> 게시글_목록_응답 = given().log().all()
-                    .params(params)
-                    .when().log().all()
-                    .get("/posts")
-                    .then().log().all()
-                    .statusCode(HttpStatus.OK.value())
-                    .extract();
+            var 응답된_게시글_목록 = 게시글_목록_요청(페이지_사이즈, 페이지_번호, 정렬_정보);
 
             // then
-            List<String> 게시글의_타이틀_목록 = 게시글_목록_응답.jsonPath().getList("title", String.class);
-            assertThat(게시글의_타이틀_목록).isEqualTo(저장된_게시글의_타이틀_목록);
+            var 응답된_게시글_제목_목록 = 게시글_제목만_분류하기(응답된_게시글_목록);
+            assertThat(응답된_게시글_제목_목록).isEqualTo(예상하는_응답된_게시글_제목_목록);
         }
 
+        private List<Post> 게시글_더미_데이터_생성하기(Blog blog, int 개수) {
+            List<Post> 생성된_게시글_데이터 = 게시글_더미_데이터_생성(blog, 개수);
+            return postRepository.saveAll(생성된_게시글_데이터);
+        }
     }
 }
