@@ -1,6 +1,3 @@
-server:
-  port: 8080
-
 spring:
   config:
     activate:
@@ -25,6 +22,7 @@ spring:
 
 logging:
   level:
+    org.hibernate.SQL: debug
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
     org.hibernate.type.descriptor.sql: trace

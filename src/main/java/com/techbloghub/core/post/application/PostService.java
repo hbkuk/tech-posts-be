@@ -4,7 +4,10 @@ import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.application.dto.PostCreateRequest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
+import com.techbloghub.core.post.presentation.dto.PostResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +35,11 @@ public class PostService {
                         request.getDescription()))
                 .collect(Collectors.toList())
                 .forEach(this::registerPost);
+    }
+
+    public List<PostResponse> findAll(Pageable pageable) {
+        Page<Post> page = postRepository.findAll(pageable);
+        return PostResponse.of(page.getContent());
     }
 
     public Optional<LocalDateTime> getLatestPublishDate(Blog blog) {
