@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 public class PostTestUtil {
 
-    public static List<Post> 게시글_더미_데이터_생성(Blog 블로그, int 개수) {
+    public static List<Post> 게시글_테스트_데이터_생성하기(Blog 블로그, int 개수) {
         return IntStream.rangeClosed(1, 개수)
                 .mapToObj(postIndex -> new Post(
                         블로그,
