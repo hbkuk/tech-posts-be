@@ -1,6 +1,6 @@
 package com.techbloghub.core.post.application;
 
-import com.techbloghub.common.util.ApplicationTest;
+import com.techbloghub.common.util.ApplicationMockTest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD) // 테스트 메서드간 캐싱 동작으로 인한 Spring 컨테이너 초기화
 @DisplayName("게시글 서비스 Mock 테스트")
-public class PostServiceMockTest extends ApplicationTest {
+public class PostServiceMockTest extends ApplicationMockTest {
 
     @Autowired
     PostService postService;
