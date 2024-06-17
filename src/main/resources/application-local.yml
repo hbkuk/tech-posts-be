@@ -19,9 +19,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?rewriteBatchedStatements=true
-    username: root
-    password: root132!
+    url: jdbc:mysql://localhost:3306/tech-local?rewriteBatchedStatements=true
+    username: tech_local
+    password: local!32
 
 logging:
   level:

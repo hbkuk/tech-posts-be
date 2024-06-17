@@ -1,10 +1,10 @@
 package com.techbloghub.common.exception.common;
 
+import com.techbloghub.common.exception.auth.UnauthorizedException;
 import com.techbloghub.common.exception.badRequest.BadRequestException;
 import com.techbloghub.common.exception.common.dto.ErrorResponse;
 import com.techbloghub.common.exception.forbidden.ForbiddenException;
 import com.techbloghub.common.exception.server.InternalServerErrorException;
-import com.techbloghub.common.exception.unauth.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
