@@ -6,6 +6,8 @@ import com.techbloghub.core.authentication.application.dto.KakaoProfileResponse;
 import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
 import com.techbloghub.core.authentication.application.kakao.KakaoClient;
 import com.techbloghub.core.authentication.domain.MemberTokens;
+import com.techbloghub.core.authentication.domain.RefreshToken;
+import com.techbloghub.core.authentication.domain.RefreshTokenRepository;
 import com.techbloghub.core.authentication.presentation.dto.KakaoCodeRequest;
 import com.techbloghub.core.member.application.MemberService;
 import com.techbloghub.core.member.domain.Member;
@@ -14,8 +16,8 @@ import com.techbloghub.core.member.domain.MemberType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static com.techbloghub.core.auth.fixture.KakaoMemberFixture.어피치;
@@ -25,17 +27,20 @@ import static org.mockito.Mockito.*;
 @DisplayName("Toke 서비스 Mock 테스트")
 public class TokenServiceMockTest extends ApplicationMockTest {
 
-    @Autowired
+    @InjectMocks
     TokenService tokenService;
 
-    @MockBean
+    @Mock
     KakaoClient kakaoClient;
 
-    @MockBean
+    @Mock
     JwtTokenProvider jwtTokenProvider;
 
-    @MockBean
+    @Mock
     MemberService memberService;
+
+    @Mock
+    RefreshTokenRepository refreshTokenRepository;
 
     @Nested
     class 카카오를_통해_토큰_발급 {
@@ -59,6 +64,7 @@ public class TokenServiceMockTest extends ApplicationMockTest {
             // then
             verify(kakaoClient, times(1)).requestKakaoProfile(카카오_인가_코드_요청_정보.getCode());
             verify(memberService, times(1)).findOrCreateMemberByKakaoId(어피치.카카오_회원_번호);
+            verify(refreshTokenRepository, times(1)).save(any(RefreshToken.class));
             verify(jwtTokenProvider, times(1)).generateLoginToken(any());
         }
     }

@@ -16,10 +16,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class TokenService {
 
-    private final MemberService memberService;
-    private final KakaoClient kakaoClient;
-    private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberService memberService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final KakaoClient kakaoClient;
 
     public MemberTokens generateToken(KakaoCodeRequest request) {
         KakaoProfileResponse kakaoProfileResponse = kakaoClient.requestKakaoProfile(request.getCode());
