@@ -1,11 +1,12 @@
 package com.techbloghub.core.authentication.application;
 
 import com.techbloghub.core.authentication.application.dto.KakaoProfileResponse;
+import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
+import com.techbloghub.core.authentication.application.kakao.KakaoClient;
 import com.techbloghub.core.authentication.domain.MemberTokens;
 import com.techbloghub.core.authentication.domain.RefreshToken;
 import com.techbloghub.core.authentication.domain.RefreshTokenRepository;
 import com.techbloghub.core.authentication.presentation.dto.KakaoCodeRequest;
-import com.techbloghub.core.authentication.presentation.dto.TokenResponse;
 import com.techbloghub.core.member.application.MemberService;
 import com.techbloghub.core.member.domain.Member;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class TokenService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public TokenResponse generateToken(KakaoCodeRequest request) {
+    public MemberTokens generateToken(KakaoCodeRequest request) {
         KakaoProfileResponse kakaoProfileResponse = kakaoClient.requestKakaoProfile(request.getCode());
         Member member = memberService.findOrCreateMemberByKakaoId(kakaoProfileResponse.getId());
 
@@ -28,6 +29,6 @@ public class TokenService {
         RefreshToken savedRefreshToken = new RefreshToken(memberTokens.getRefreshToken(),
                 member.getId());
         refreshTokenRepository.save(savedRefreshToken);
-        return TokenResponse.of(memberTokens.getAccessToken(), memberTokens.getRefreshToken());
+        return memberTokens;
     }
 }

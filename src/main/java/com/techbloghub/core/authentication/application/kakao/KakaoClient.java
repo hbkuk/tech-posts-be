@@ -1,4 +1,4 @@
-package com.techbloghub.core.authentication.application;
+package com.techbloghub.core.authentication.application.kakao;
 
 import com.techbloghub.common.util.WebClientUtil;
 import com.techbloghub.core.authentication.application.dto.KakaoAccessTokenRequest;

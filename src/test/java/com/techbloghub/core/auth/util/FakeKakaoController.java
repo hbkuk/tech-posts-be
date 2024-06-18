@@ -2,10 +2,10 @@ package com.techbloghub.core.auth.util;
 
 
 import com.techbloghub.core.auth.fixture.KakaoMemberFixture;
-import com.techbloghub.core.authentication.application.KakaoAuthProperties;
 import com.techbloghub.core.authentication.application.dto.KakaoAccessTokenRequest;
 import com.techbloghub.core.authentication.application.dto.KakaoAccessTokenResponse;
 import com.techbloghub.core.authentication.application.dto.KakaoProfileResponse;
+import com.techbloghub.core.authentication.application.kakao.KakaoAuthProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;

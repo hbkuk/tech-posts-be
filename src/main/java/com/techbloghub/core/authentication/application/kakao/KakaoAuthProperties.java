@@ -1,4 +1,4 @@
-package com.techbloghub.core.authentication.application;
+package com.techbloghub.core.authentication.application.kakao;
 
 import lombok.Getter;
 import lombok.Setter;

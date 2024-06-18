@@ -1,4 +1,4 @@
-package com.techbloghub.core.authentication.application;
+package com.techbloghub.core.authentication.application.jwt;
 
 import com.techbloghub.common.exception.auth.InvalidJwtException;
 import org.springframework.stereotype.Component;
