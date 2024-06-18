@@ -2,17 +2,12 @@ package com.techbloghub.core.auth.acceptance;
 
 import com.techbloghub.common.util.AcceptanceTest;
 import com.techbloghub.core.authentication.presentation.dto.KakaoCodeRequest;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 import static com.techbloghub.core.auth.fixture.KakaoMemberFixture.라이언;
-import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.techbloghub.core.auth.step.AuthSteps.*;
 
 @DisplayName("인증 인수 테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
@@ -30,24 +25,13 @@ public class AuthAcceptanceTest extends AcceptanceTest {
             @Test
             void 가입되지_않은_회원에게_토큰_발급() {
                 // given
-                KakaoCodeRequest request = new KakaoCodeRequest(라이언.인가_코드);
+                var 로그인_요청_정보 = new KakaoCodeRequest(라이언.인가_코드);
 
                 // when
-                ExtractableResponse<Response> 카카오_로그인_요청_응답 = given()
-                        .body(request)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .when()
-                        .post("/api/auth/kakao")
-                        .then().log().all()
-                        .statusCode(HttpStatus.OK.value())
-                        .extract();
+                var 카카오_로그인_요청_응답 = 카카오_로그인_요청(로그인_요청_정보);
 
                 // then
-                String 발급된_액세스_토큰 = 카카오_로그인_요청_응답.jsonPath().getString("accessToken");
-                assertThat(발급된_액세스_토큰).isNotBlank();
-
-                String 발급된_리프레시_토큰 = 카카오_로그인_요청_응답.cookie("refresh-token");
-                assertThat(발급된_리프레시_토큰).isNotBlank();
+                토큰_확인(카카오_로그인_요청_응답);
             }
         }
 
@@ -61,13 +45,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
             @Test
             void 인가_코드를_전달하지_않은_경우() {
                 // when
-                given()
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .when()
-                        .post("/api/auth/kakao")
-                        .then().log().all()
-                        .statusCode(HttpStatus.BAD_REQUEST.value())
-                        .extract();
+                실패하는_로그인_요청();
             }
         }
     }
