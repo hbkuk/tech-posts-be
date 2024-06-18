@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
@@ -25,7 +26,7 @@ public class AuthenticationController {
     private final TokenService tokenService;
 
     @PostMapping("/api/auth/kakao")
-    public ResponseEntity<AccessTokenResponse> generateTokenFromKakao(@RequestBody KakaoCodeRequest request,
+    public ResponseEntity<AccessTokenResponse> generateTokenFromKakao(@Valid @RequestBody KakaoCodeRequest request,
                                                                       final HttpServletResponse response) {
         MemberTokens memberTokens = tokenService.generateToken(request);
 

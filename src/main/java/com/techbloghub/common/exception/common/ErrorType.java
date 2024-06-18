@@ -25,6 +25,8 @@ public enum ErrorType {
     EXPIRED_PERIOD_REFRESH_TOKEN(9103, "기한이 만료된 RefreshToken입니다."),
     EXPIRED_PERIOD_ACCESS_TOKEN(9104, "기한이 만료된 AccessToken입니다."),
 
+    INVALID_REQUEST_BODY(9104, "올바르지 않은 요청 데이터입니다."),
+
     UNHANDLED_EXCEPTION(9999, "예상치 못한 예외입니다.");
 
     private final int code;
