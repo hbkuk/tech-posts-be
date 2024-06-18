@@ -23,8 +23,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         @Nested
         class 성공 {
 
-            // TODO: 가입되지 않은 회원 -> 회원 저장 -> 토큰 발급
-
             /**
              * When 클라이언트는 카카오로부터 전달받은 정보로 로그인을 요청한다.
              * Then 회원 가입 처리 후 토큰이 발급된다.
@@ -51,41 +49,25 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 String 발급된_리프레시_토큰 = 카카오_로그인_요청_응답.cookie("refresh-token");
                 assertThat(발급된_리프레시_토큰).isNotBlank();
             }
-
-            // TODO: 이미 가입된 회원 -> 토큰 발급
-
-            /**
-             * Given 클라이언트는 카카오를 통해 회원가입을 진행한다.
-             * When  클라이언트는 카카오로부터 전달받은 정보로 로그인을 요청한다.
-             * Then  회원 가입은 생략되고, 토큰이 발급된다.
-             */
-            @Test
-            void 이미_가입된_회원에게_토큰_발급() {
-                // given
-
-                // when
-
-                // then
-            }
-
         }
 
         @Nested
         class 실패 {
 
-            // TODO: 코드, redirect url 등등의 정보를 전달하지 않은 경우
-
             /**
-             * When  클라이언트는 카카오로부터 전달받은 정보를 일부 포함하지 않고 로그인을 요청한다.
-             * Then  회원 가입이 진행되지 않는다.
+             * When  클라이언트는 카카오로부터 발급받은 인가 코드를 포함하지 않고 로그인을 요청한다.
+             * Then  회원 가입이 진행되지 않고, 토큰이 발급되지 않는다.
              */
             @Test
-            void 이미_가입된_회원에게_토큰_발급() {
-                // given
-
+            void 인가_코드를_전달하지_않은_경우() {
                 // when
-
-                // then
+                given()
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .when()
+                        .post("/api/auth/kakao")
+                        .then().log().all()
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .extract();
             }
         }
     }
