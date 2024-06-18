@@ -45,8 +45,11 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                         .extract();
 
                 // then
-                String 발급된_토큰 = 카카오_로그인_요청_응답.jsonPath().getString("accessToken");
-                assertThat(발급된_토큰).isNotBlank();
+                String 발급된_액세스_토큰 = 카카오_로그인_요청_응답.jsonPath().getString("accessToken");
+                assertThat(발급된_액세스_토큰).isNotBlank();
+
+                String 발급된_리프레시_토큰 = 카카오_로그인_요청_응답.cookie("refresh-token");
+                assertThat(발급된_리프레시_토큰).isNotBlank();
             }
 
             // TODO: 이미 가입된 회원 -> 토큰 발급

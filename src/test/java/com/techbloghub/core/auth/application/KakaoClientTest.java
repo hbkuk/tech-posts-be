@@ -2,8 +2,8 @@ package com.techbloghub.core.auth.application;
 
 import com.techbloghub.common.util.ApplicationTest;
 import com.techbloghub.common.util.WebClientUtil;
-import com.techbloghub.core.authentication.application.KakaoClient;
 import com.techbloghub.core.authentication.application.dto.KakaoProfileResponse;
+import com.techbloghub.core.authentication.application.kakao.KakaoClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

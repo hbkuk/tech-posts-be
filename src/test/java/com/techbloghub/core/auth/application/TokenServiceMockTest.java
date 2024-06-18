@@ -1,10 +1,10 @@
 package com.techbloghub.core.auth.application;
 
 import com.techbloghub.common.util.ApplicationMockTest;
-import com.techbloghub.core.authentication.application.JwtTokenProvider;
-import com.techbloghub.core.authentication.application.KakaoClient;
 import com.techbloghub.core.authentication.application.TokenService;
 import com.techbloghub.core.authentication.application.dto.KakaoProfileResponse;
+import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
+import com.techbloghub.core.authentication.application.kakao.KakaoClient;
 import com.techbloghub.core.authentication.domain.MemberTokens;
 import com.techbloghub.core.authentication.presentation.dto.KakaoCodeRequest;
 import com.techbloghub.core.member.application.MemberService;
