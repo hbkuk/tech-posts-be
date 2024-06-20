@@ -34,8 +34,8 @@ security:
 kakao:
   auth:
     token-uri: http://localhost:8080/oauth/token
-    client-id: tech-blog-hub-client
-    redirect-uri: /api/auth/kakao/callback
+    client-id: f7ef47fe00d9534eb077f71acd3c48e0
+    redirect-uri: http://localhost:8080/kakao/callback
 
   user:
     profile-uri: http://localhost:8080/v2/user/me

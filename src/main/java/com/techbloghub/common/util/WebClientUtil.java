@@ -3,6 +3,7 @@ package com.techbloghub.common.util;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
@@ -45,6 +46,34 @@ public class WebClientUtil {
                 .uri(url)
                 .contentType(mediaType)
                 .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(responseType);
+    }
+
+    public <T> Mono<T> post(String url, Object requestBody, MultiValueMap<String, String> headers, Class<T> responseType) {
+        return webClient.post()
+                .uri(url)
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(responseType);
+    }
+
+    public <T> Mono<T> postFormData(String url, MultiValueMap<String, String> formData, Class<T> responseType) {
+        return webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(BodyInserters.fromFormData(formData))
+                .retrieve()
+                .bodyToMono(responseType);
+    }
+
+    public <T> Mono<T> postFormData(String url, MultiValueMap<String, String> formData, MultiValueMap<String, String> headers, Class<T> responseType) {
+        return webClient.post()
+                .uri(url)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .body(BodyInserters.fromFormData(formData))
                 .retrieve()
                 .bodyToMono(responseType);
     }
