@@ -1,8 +1,16 @@
 package com.techbloghub.core.post.application;
 
+import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
+import static com.techbloghub.core.post.util.PostTestUtil.게시글_테스트_데이터_생성하기;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.techbloghub.common.util.ApplicationTest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
+import java.util.List;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
-import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
-import static com.techbloghub.core.post.util.PostTestUtil.게시글_테스트_데이터_생성하기;
-import static org.mockito.Mockito.*;
-
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD) // 테스트 메서드간 캐싱 동작으로 인한 Spring 컨테이너 초기화
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+// 테스트 메서드간 캐싱 동작으로 인한 Spring 컨테이너 초기화
 @DisplayName("게시글 서비스 Mock 테스트")
 public class PostServiceMockTest extends ApplicationTest {
 
@@ -35,7 +37,7 @@ public class PostServiceMockTest extends ApplicationTest {
     void 페이지_정보에_따른_게시글_목록_캐싱_확인() {
         // given
         List<Post> 생성된_게시글_목록 = 게시글_테스트_데이터_생성하기(우아한형제들, 10);
-        Pageable 페이지_정보 = PageRequest.of(1, 10, Sort.Direction.DESC, "publishAt");
+        PageRequest 페이지_정보 = PageRequest.of(1, 10, Sort.Direction.DESC, "publishAt");
 
         when(postRepository.findAll(페이지_정보)).thenReturn(new PageImpl<>(생성된_게시글_목록));
 

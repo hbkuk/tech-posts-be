@@ -5,6 +5,7 @@ import static com.techbloghub.core.post.step.PostSteps.게시글_목록_요청;
 import static com.techbloghub.core.post.step.PostSteps.게시글_목록_확인;
 import static com.techbloghub.core.post.util.PostTestUtil.게시글_테스트_데이터_생성하기;
 
+import com.techbloghub.common.domain.pagination.PaginationRequest;
 import com.techbloghub.common.util.AcceptanceTest;
 import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.Post;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 @DisplayName("게시글 인수 테스트")
@@ -54,7 +54,8 @@ public class PostAcceptanceTest extends AcceptanceTest {
         void 페이지_정보를_포함한_게시글_목록_요청() {
             // given
             var 저장된_게시글_목록 = 개수만큼_게시글_등록(우아한형제들, 100);
-            var 페이지_요청_정보 = PageRequest.of(1, 5, Sort.Direction.DESC, "publishAt");
+            var 페이지_요청_정보 = new PaginationRequest(1, 5, Sort.Direction.DESC.toString(),
+                "publishAt");
 
             // when
             var 응답된_게시글_목록 = PostSteps.게시글_목록_요청(페이지_요청_정보);

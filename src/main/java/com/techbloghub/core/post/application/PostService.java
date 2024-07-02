@@ -24,9 +24,10 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "post", key = "#pageable.pageNumber + '-' + #pageable.pageSize + '-' + #pageable.sort.toString()")
-    public PagedResponse<PostResponse> findAll(Pageable pageable) {
-        Page<Post> posts = postRepository.findAll(pageable);
+    @Cacheable(cacheNames = "post", key = "#request.pageNumber + '-' + #request.pageSize + '-' + #request.sort.toString()")
+    public PagedResponse<PostResponse> findAll(Pageable request) {
+        // TODO: PaginationRequest 유효성 검증 필요
+        Page<Post> posts = postRepository.findAll(request);
         return convertPagedResponse(mapPostResponse(posts), posts);
     }
 

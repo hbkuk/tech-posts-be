@@ -1,27 +1,27 @@
 package com.techbloghub.common.domain.pagination;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.domain.Page;
 
 @Data
 @AllArgsConstructor
+@Schema(description = "페이지네이션 응답")
 public class PagedResponse<T> {
 
+    @Schema(description = "목록")
     private List<T> items;
-    private int currentPage;
-    private int totalPages;
-    private long totalItems;
-    private int pageSize;
 
-    public static <T> PagedResponse<T> of(Page<T> page) {
-        return new PagedResponse<>(
-            page.getContent(),
-            page.getNumber(),
-            page.getTotalPages(),
-            page.getTotalElements(),
-            page.getSize()
-        );
-    }
+    @Schema(description = "현재 페이지", example = "1")
+    private int currentPage;
+
+    @Schema(description = "총 페이지 수", example = "10")
+    private int totalPages;
+
+    @Schema(description = "총 아이템 수", example = "100")
+    private long totalItems;
+
+    @Schema(description = "페이지 크기", example = "10")
+    private int pageSize;
 }

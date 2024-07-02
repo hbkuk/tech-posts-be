@@ -23,25 +23,10 @@ spring:
     username: tech_local
     password: local!32
 
-  redis:
-    host: localhost
-    port: 6379
-
-security:
-  jwt:
-    token:
-      secret-key: tech-blog-hub-secret-key
-      access-token-expire-length: 3600000 # 1 hour for access token
-      refresh-token-expire-length: 1209600000 # 2 weeks for refresh token
-
-kakao:
-  auth:
-    token-uri: https://kauth.kakao.com/oauth/token
-    client-id: f7ef47fe00d9534eb077f71acd3c48e0
-    redirect-uri: http://localhost:8080/kakao/callback
-
-  user:
-    profile-uri: https://kapi.kakao.com/v2/user/me
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 logging:
   level:
