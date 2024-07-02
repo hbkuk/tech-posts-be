@@ -2,12 +2,16 @@ package com.techbloghub.core.post.domain;
 
 import com.techbloghub.common.domain.base.BaseEntity;
 import com.techbloghub.core.blog.domain.Blog;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
