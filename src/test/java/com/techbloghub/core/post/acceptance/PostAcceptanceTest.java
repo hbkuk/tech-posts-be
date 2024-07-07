@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 
 @DisplayName("게시글 인수 테스트")
 public class PostAcceptanceTest extends AcceptanceTest {
@@ -54,8 +53,7 @@ public class PostAcceptanceTest extends AcceptanceTest {
         void 페이지_정보를_포함한_게시글_목록_요청() {
             // given
             var 저장된_게시글_목록 = 개수만큼_게시글_등록(우아한형제들, 100);
-            var 페이지_요청_정보 = new PaginationRequest(1, 5, Sort.Direction.DESC.toString(),
-                "publishAt");
+            var 페이지_요청_정보 = new PaginationRequest(1, 5, "publishAt", "DESC");
 
             // when
             var 응답된_게시글_목록 = PostSteps.게시글_목록_요청(페이지_요청_정보);

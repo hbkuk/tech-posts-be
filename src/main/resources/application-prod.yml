@@ -4,7 +4,7 @@ server:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: local
 
   jpa:
     hibernate:
@@ -16,27 +16,13 @@ spring:
         jdbc:
           batch_size: 100
     database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/blog?rewriteBatchedStatements=true
-    username: root
-    password: root132!
-
-security:
-  jwt:
-    token:
-      secret-key: atdd-secret-key
-      expire-length: 3600000
-
-kakao:
-  auth:
-    token-uri: https://kauth.kakao.com/oauth/token
-    client-id: tech-blog-hub-client
-    redirect-uri: /api/auth/kakao/callback
-
-  user:
-    profile-uri: https://kapi.kakao.com/v2/user/me
+    url: jdbc:mysql://${DATABASE_URL}:3306/tech?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 logging:
   level:
@@ -45,4 +31,4 @@ logging:
     org.hibernate.type.descriptor.sql: trace
 
 rss:
-  cron: "0 * * * * *"
+  cron: "0 0 * * * *"
