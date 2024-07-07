@@ -1,6 +1,7 @@
 package com.techbloghub.core.post.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techbloghub.core.blog.presentation.dto.BlogResponse;
 import com.techbloghub.core.post.domain.Post;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
@@ -27,12 +28,17 @@ public class PostResponse {
     @Schema(description = "내용", example = "토스 프론트엔드 개발자들은 함수형 프로그래밍 (Functional Programming) 과 객체 지향 프로그래밍 (Ob...")
     private final String description;
 
+    @Schema(description = "블로그 정보")
+    private final BlogResponse blogResponse;
+
     public static PostResponse of(Post post) {
         return new PostResponse(
             post.getId(),
             post.getLink(),
             post.getTitle(),
             post.getPublishAt(),
-            post.getDescription());
+            post.getDescription(),
+            BlogResponse.of(post.getBlog())
+        );
     }
 }
