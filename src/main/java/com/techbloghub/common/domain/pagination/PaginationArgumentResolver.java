@@ -24,13 +24,13 @@ public class PaginationArgumentResolver implements HandlerMethodArgumentResolver
             PaginationDefault.class);
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        int page = parseOrDefault(request.getParameter("page"), paginationDefault.page());
+        int number = parseOrDefault(request.getParameter("number"), paginationDefault.page());
         int size = parseOrDefault(request.getParameter("size"), paginationDefault.size());
         String sortBy = getOrDefault(request.getParameter("sortBy"), paginationDefault.sort());
         String direction = getOrDefault(request.getParameter("direction"),
             paginationDefault.direction());
 
-        return new PaginationRequest(page, size, sortBy, direction);
+        return new PaginationRequest(number, size, sortBy, direction);
     }
 
     private int parseOrDefault(String param, int defaultValue) {

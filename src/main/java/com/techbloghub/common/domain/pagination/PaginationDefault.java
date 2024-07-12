@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PaginationDefault {
 
-    int page() default 0;
+    int page() default 1;
 
     int size() default 10;
 
