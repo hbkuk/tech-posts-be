@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "post", key = "#request.pageNumber + '-' + #request.pageSize + '-' + #request.sort.toString()")
+    //@Cacheable(cacheNames = "post", key = "#request.pageNumber + '-' + #request.pageSize + '-' + #request.sort.toString()") // TODO: Cache 적용 필요
     public PagedResponse<PostResponse> findAll(Pageable request) {
         // TODO: PaginationRequest 유효성 검증 필요
         Page<Post> posts = postRepository.findAll(request);
