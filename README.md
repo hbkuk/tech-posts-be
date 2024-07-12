@@ -1,6 +1,6 @@
-# Tech Blog Hub
+# Tech Posts
 
-- 기술 블로그 모음
+- 기술 포스팅 모음
 
 ---
 
