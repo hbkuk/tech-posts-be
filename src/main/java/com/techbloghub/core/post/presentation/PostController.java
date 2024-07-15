@@ -20,6 +20,8 @@ public class PostController {
 
     private final PostService postService;
 
+    // TODO: 게시글 반응..
+
     @Operation(summary = "게시글 목록", description = "게시글 목록 조회")
     @GetMapping("/api/posts")
     public ResponseEntity<PagedResponse<PostResponse>> findAllPosts(
