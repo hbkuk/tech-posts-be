@@ -14,7 +14,8 @@ public enum Blog {
     데브시스터즈("데브시스터즈", "DEVSISTERS", "https://tech.devsisters.com/rss.xml"),
     컬리("컬리", "KURLY", "https://helloworld.kurly.com/feed.xml"),
     인프랩("인프랩", "INFLAB", "https://tech.inflab.com/rss.xml"),
-    우아한형제들("우아한형제들", "WOOWAHAN", "https://techblog.woowahan.com/feed/");
+    우아한형제들("우아한형제들", "WOOWAHAN", "https://techblog.woowahan.com/feed/"),
+    요기요("요기요", "YOGIYO", "https://medium.com/feed/deliverytechkorea");
 
     private final String koreanName;
     private final String englishName;

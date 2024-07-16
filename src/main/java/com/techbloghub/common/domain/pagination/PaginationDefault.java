@@ -15,6 +15,6 @@ public @interface PaginationDefault {
 
     String sort() default "id";
 
-    String direction() default "ASC";
+    String direction() default "DESC";
 
 }
