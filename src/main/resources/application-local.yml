@@ -6,6 +6,13 @@ spring:
     activate:
       on-profile: local
 
+  web:
+    resources:
+      add-mappings: false
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -32,6 +39,12 @@ logging:
 
 rss:
   cron: "0 * * * * *"
+
+slack:
+  webhook:
+    server-error-url: https://hooks.slack.com/services/ # FIX ME
+    rss-reader-url: https://hooks.slack.com/services/ # FIX ME
+
 
 
 springdoc:

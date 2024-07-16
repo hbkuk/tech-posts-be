@@ -3,6 +3,13 @@ spring:
     activate:
       on-profile: test
 
+  web:
+    resources:
+      add-mappings: false
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
   jpa:
     hibernate:
       ddl-auto: create
@@ -13,12 +20,18 @@ spring:
         jdbc:
           batch_size: 100
     database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/tech_test?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: tech_test
     password: test!32
+
+slack:
+  webhook:
+    server-error-url: https://hooks.slack.com/services/ # FIX ME
+    rss-reader-url: https://hooks.slack.com/services/ # FIX ME
 
 
 logging:

@@ -51,6 +51,8 @@ jobs:
             DB_HOST=${{ secrets.DB_HOST }}
             DB_USERNAME=${{ secrets.DB_USERNAME }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            SLACK_SERVER_ERROR_URL=${{ secrets.SLACK_SERVER_ERROR_URL }}
+            SLACK_RSS_READER_URL=${{ secrets.SLACK_RSS_READER_URL }}
 
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.4
