@@ -1,7 +1,10 @@
-package com.techbloghub.common.alert;
+package com.techbloghub.common.alert.slack;
 
 import static com.techbloghub.common.alert.ExceptionWrapper.extractExceptionWrapper;
 
+import com.techbloghub.common.alert.AlertSender;
+import com.techbloghub.common.alert.ExceptionWrapper;
+import com.techbloghub.common.alert.MessageGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -18,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SlackLoggerAspect {
+public class SlackErrorLoggerAspect {
 
     private final AlertSender alertSender;
 
@@ -28,7 +31,7 @@ public class SlackLoggerAspect {
      * @param joinPoint Aspect가 적용된 메서드의 조인 포인트
      */
 
-    @Before("@annotation(com.techbloghub.common.alert.SlackLogger)")
+    @Before("@annotation(com.techbloghub.common.alert.slack.SlackErrorLogger)")
     public void sendLogForError(final JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         if (args.length != 1) {
@@ -42,7 +45,7 @@ public class SlackLoggerAspect {
             return;
         }
 
-        if (args[0] instanceof SlackAlarmFailedEvent) { // TODO: Event 발행 추가 
+        if (args[0] instanceof SlackAlarmFailedEvent) { // TODO: Event 발행 추가
             alertSender.send(
                 MessageGenerator.generateFailedAlarmMessage((SlackAlarmFailedEvent) args[0]));
         }

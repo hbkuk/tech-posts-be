@@ -1,4 +1,4 @@
-package com.techbloghub.common.alert;
+package com.techbloghub.common.alert.slack;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -18,7 +18,7 @@ public class SlackAlarmFailedListener {
      *
      * @param slackAlarmFailedEvent 처리할 알림 전송 실패 이벤트.
      */
-    @SlackLogger
+    @SlackErrorLogger
     @EventListener
     public void handle(final SlackAlarmFailedEvent slackAlarmFailedEvent) {
         log.warn("알람 전송 실패 - 내용 : {}", slackAlarmFailedEvent);

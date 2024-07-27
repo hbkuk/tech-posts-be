@@ -19,6 +19,7 @@ public class RssFeedScheduler {
 
     @Scheduled(cron = "${rss.cron}")
     public void syncAllFeeds() {
+        // TODO 1) : 접속이 많지 않은 새벽 시간에 Thread 개수 확인해서 병렬처리
         Arrays.stream(Blog.values()).forEach(blog -> {
             try {
                 rssService.syncFeeds(blog);
@@ -27,5 +28,4 @@ public class RssFeedScheduler {
             }
         });
     }
-
 }

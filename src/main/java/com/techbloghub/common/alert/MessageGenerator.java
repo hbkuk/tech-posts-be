@@ -1,5 +1,6 @@
 package com.techbloghub.common.alert;
 
+import com.techbloghub.common.alert.slack.SlackAlarmFailedEvent;
 import lombok.NoArgsConstructor;
 
 /**

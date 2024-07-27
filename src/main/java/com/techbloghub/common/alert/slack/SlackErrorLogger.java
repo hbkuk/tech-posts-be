@@ -1,4 +1,4 @@
-package com.techbloghub.common.alert;
+package com.techbloghub.common.alert.slack;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SlackLogger {
+public @interface SlackErrorLogger {
 }

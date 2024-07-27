@@ -4,7 +4,7 @@ import static com.techbloghub.common.exception.common.ErrorCode.NOT_FOUND_COOKIE
 import static com.techbloghub.common.exception.common.ErrorCode.UNHANDLED_EXCEPTION;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
-import com.techbloghub.common.alert.SlackLogger;
+import com.techbloghub.common.alert.slack.SlackErrorLogger;
 import com.techbloghub.common.exception.common.dto.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class GlobalExceptionAdvice {
         return ResponseEntity.status(e.getStatusCode()).body(ErrorResponse.from(NOT_FOUND_COOKIE));
     }
 
-    @SlackLogger
+    @SlackErrorLogger
     @ExceptionHandler({
         HttpRequestMethodNotSupportedException.class,
         HttpMediaTypeNotSupportedException.class,
@@ -88,7 +88,7 @@ public class GlobalExceptionAdvice {
             .body(ErrorResponse.from(UNHANDLED_EXCEPTION));
     }
 
-    @SlackLogger
+    @SlackErrorLogger
     @ExceptionHandler(InternalServerErrorException.class)
     public ResponseEntity<ErrorResponse> handleInternalServerException(
         final InternalServerErrorException e) {
@@ -98,7 +98,7 @@ public class GlobalExceptionAdvice {
             .body(ErrorResponse.from(e.getErrorCode()));
     }
 
-    @SlackLogger
+    @SlackErrorLogger
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> unHandledExceptionHandler(final Exception e) {
         log.error("Not Expected Exception is Occurred", e);
