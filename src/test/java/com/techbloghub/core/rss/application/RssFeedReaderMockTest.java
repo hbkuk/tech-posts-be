@@ -4,6 +4,8 @@ import com.apptasticsoftware.rssreader.DateTime;
 import com.apptasticsoftware.rssreader.Item;
 import com.apptasticsoftware.rssreader.RssReader;
 import com.techbloghub.core.rss.domain.RssFeed;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,6 +20,7 @@ import java.util.stream.Stream;
 
 import static com.techbloghub.core.blog.domain.Blog.컬리;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @DisplayName("Rss Feed Reader Mock 테스트")
@@ -52,14 +55,13 @@ public class RssFeedReaderMockTest {
             컬리_두번째_피드_아이템.setPubDate("Mon, 20 May 2024 13:00:00 +0900");
             컬리_두번째_피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development");
 
-            when(rssReader.read(컬리.getBlogUrl())).thenReturn(Stream.of(컬리_첫번째_피드_아이템, 컬리_두번째_피드_아이템));
+            when(rssReader.read(any(InputStream.class))).thenReturn(Stream.of(컬리_첫번째_피드_아이템, 컬리_두번째_피드_아이템));
 
 
             // when
             List<RssFeed> 읽은_피드 = rssFeedReader.read(컬리.getBlogUrl());
 
             // then
-
             assertEquals(List.of(new RssFeed(컬리_첫번째_피드_아이템), new RssFeed(컬리_두번째_피드_아이템)), 읽은_피드);
         }
     }

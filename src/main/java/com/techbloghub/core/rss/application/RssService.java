@@ -21,16 +21,6 @@ public class RssService {
 
     private final PostService postService;
 
-    private static PostCreateRequest convertPostCreateRequest(Blog blog, RssFeed rssFeed) {
-        return PostCreateRequest.of(
-                blog,
-                rssFeed.getLink(),
-                rssFeed.getTitle(),
-                rssFeed.getPublishAt(),
-                rssFeed.getDescription()
-        );
-    }
-
     @Transactional
     public void syncFeeds(Blog blog) {
         List<RssFeed> rssFeeds = rssFeedReader.read(blog.getBlogUrl());
@@ -40,6 +30,16 @@ public class RssService {
         if (!createRequests.isEmpty()) {
             postService.registerPost(createRequests);
         }
+    }
+
+    private static PostCreateRequest convertPostCreateRequest(Blog blog, RssFeed rssFeed) {
+        return PostCreateRequest.of(
+            blog,
+            rssFeed.getLink(),
+            rssFeed.getTitle(),
+            rssFeed.getPublishAt(),
+            rssFeed.getDescription()
+        );
     }
 
     private List<PostCreateRequest> getPostCreateRequests(Blog blog, List<RssFeed> rssFeeds, Optional<LocalDateTime> latestPublishDate) {
