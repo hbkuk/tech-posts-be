@@ -1,15 +1,14 @@
 package com.techbloghub.common.alert.slack;
 
-import static com.techbloghub.common.alert.ExceptionWrapper.extractExceptionWrapper;
+import static com.techbloghub.common.alert.slack.ExceptionWrapper.extractExceptionWrapper;
 
-import com.techbloghub.common.alert.AlertSender;
-import com.techbloghub.common.alert.ExceptionWrapper;
-import com.techbloghub.common.alert.MessageGenerator;
+import com.techbloghub.common.alert.sender.SlackAlertSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,7 +22,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SlackErrorLoggerAspect {
 
-    private final AlertSender alertSender;
+    private final SlackAlertSender sender;
+
+    @Value("${slack.webhook.server-error-url}")
+    private String hookUri;
 
     /**
      * {@code @SlackLogger} 어노테이션이 적용된 메서드 실행 전, 예외 정보나 실패한 알림 이벤트를 로그로 전송
@@ -41,13 +43,13 @@ public class SlackErrorLoggerAspect {
 
         if (args[0] instanceof Exception) {
             ExceptionWrapper exceptionWrapper = extractExceptionWrapper((Exception) args[0]);
-            alertSender.send(MessageGenerator.generate(exceptionWrapper));
+            sender.send(ExceptionMessageGenerator.generate(exceptionWrapper), hookUri);
             return;
         }
 
         if (args[0] instanceof SlackAlarmFailedEvent) { // TODO: Event 발행 추가
-            alertSender.send(
-                MessageGenerator.generateFailedAlarmMessage((SlackAlarmFailedEvent) args[0]));
+            sender.send(
+                ExceptionMessageGenerator.generateFailedAlarmMessage((SlackAlarmFailedEvent) args[0]), hookUri);
         }
     }
 }

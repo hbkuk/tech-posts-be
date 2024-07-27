@@ -1,13 +1,12 @@
-package com.techbloghub.common.alert;
+package com.techbloghub.common.alert.slack;
 
-import com.techbloghub.common.alert.slack.SlackAlarmFailedEvent;
 import lombok.NoArgsConstructor;
 
 /**
  * 메시지를 생성하는 유틸리티
  */
 @NoArgsConstructor
-public class MessageGenerator {
+public class ExceptionMessageGenerator {
 
     private static final String EXCEPTION_TITLE = "[ EXCEPTION ]\n";
     private static final String ALARM_FAILED_TITLE = "[ ALARM FAILED ]\n";

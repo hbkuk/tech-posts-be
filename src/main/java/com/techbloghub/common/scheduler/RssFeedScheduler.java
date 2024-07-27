@@ -1,5 +1,6 @@
 package com.techbloghub.common.scheduler;
 
+import com.techbloghub.common.alert.rss.SlackInfoLogger;
 import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.rss.application.RssService;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class RssFeedScheduler {
 
     private final RssService rssService;
 
+    @SlackInfoLogger
     @Scheduled(cron = "${rss.cron}")
     public void syncAllFeeds() {
         // TODO 1) : 접속이 많지 않은 새벽 시간에 Thread 개수 확인해서 병렬처리

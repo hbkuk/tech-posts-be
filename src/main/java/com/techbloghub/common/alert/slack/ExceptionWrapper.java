@@ -1,4 +1,4 @@
-package com.techbloghub.common.alert;
+package com.techbloghub.common.alert.slack;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
