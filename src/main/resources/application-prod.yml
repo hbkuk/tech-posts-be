@@ -38,7 +38,8 @@ logging:
     org.hibernate.type.descriptor.sql: trace
 
 rss:
-  cron: "0 3 * * *"
+  cron: "0 3 * * * *"
+
 
 slack:
   webhook:
