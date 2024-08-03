@@ -25,7 +25,7 @@ public class PostController {
     @Operation(summary = "게시글 목록", description = "게시글 목록 조회")
     @GetMapping("/api/posts")
     public ResponseEntity<PagedResponse<PostResponse>> findAllPosts(
-        @ParameterObject @PaginationDefault(sort = "publishAt") PaginationRequest request) {
+        @ParameterObject @PaginationDefault() PaginationRequest request) {
         PagedResponse<PostResponse> pagedResponse = postService.findAll(request.toEntity());
         return ResponseEntity.ok(pagedResponse);
     }
