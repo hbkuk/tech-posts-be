@@ -1,11 +1,10 @@
-FROM openjdk:17-jdk-alpine
+FROM amazoncorretto:17
+ARG JAR_FILE=backend/build/libs/*.jar
+
 ENV SPRING_PROFILES_ACTIVE=prod
 
-# 작업 디렉토리 생성
-WORKDIR /app
-
 # 호스트 머신의 빌드된 JAR 파일을 컨테이너로 복사
-COPY build/libs/*.jar app.jar
+COPY ${JAR_FILE} app.jar
 
 ENV PROFILE=${PROFILE}
 
