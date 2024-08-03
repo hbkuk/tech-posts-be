@@ -8,16 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-
+    
     @Query("SELECT post FROM Post post " +
-        "WHERE post.blog = :blog " +
-        "AND post.publishAt = (SELECT MAX(p.publishAt) " +
-        "FROM Post p " +
-        "WHERE p.blog = :blog) " +
-        "AND post.id = (SELECT MAX(p2.id) " +
-        "FROM Post p2 " +
-        "WHERE p2.blog = :blog " +
-        "AND p2.publishAt = post.publishAt)")
+        "LEFT JOIN Post post2 ON post.blog = post2.blog " +
+        "AND (post.publishAt < post2.publishAt OR (post.publishAt = post2.publishAt AND post.id < post2.id)) " +
+        "WHERE post2.id IS NULL AND post.blog = :blog")
     Optional<Post> findLatestPost(@Param("blog") Blog blog);
+
 
 }
