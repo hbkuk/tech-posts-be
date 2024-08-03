@@ -54,7 +54,7 @@ public class PostService {
             .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // TODO: Cache 설정 필요 <-> 스케줄러 확인
     public Optional<LocalDateTime> getLatestPublishDate(Blog blog) {
         Optional<Post> latestPost = postRepository.findLatestPost(blog);
         return latestPost.map(Post::getPublishAt);

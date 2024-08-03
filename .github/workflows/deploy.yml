@@ -20,11 +20,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        working-directory: .
+        working-directory: ./backend
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        working-directory: .
+        working-directory: ./backend
         run: ./gradlew clean build --exclude-task test
 
       - name: Cache Gradle package
@@ -44,7 +44,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_REPO }}:latest
           build-args: |

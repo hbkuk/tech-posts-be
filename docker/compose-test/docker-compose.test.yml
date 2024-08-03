@@ -4,7 +4,7 @@ services:
     image: mysql:8.0
     container_name: tech-mysql-test
     ports:
-      - 3307:3306
+      - 3308:3306
     environment:
       MYSQL_ROOT_PASSWORD: test!32
       TZ: Asia/Seoul
