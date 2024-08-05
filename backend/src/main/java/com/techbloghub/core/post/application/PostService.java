@@ -56,8 +56,7 @@ public class PostService {
 
     @Transactional(readOnly = true) // TODO: Cache 설정 필요 <-> 스케줄러 확인
     public Optional<LocalDateTime> getLatestPublishDate(Blog blog) {
-        Optional<Post> latestPost = postRepository.findLatestPost(blog);
-        return latestPost.map(Post::getPublishAt);
+        return postRepository.findLatestPublishDate(blog);
     }
 
     private PagedResponse<PostResponse> convertPagedResponse(
