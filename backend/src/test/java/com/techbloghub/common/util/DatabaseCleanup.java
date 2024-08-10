@@ -27,16 +27,21 @@ public class DatabaseCleanup implements InitializingBean {
             .map(EntityType::getName)
             .collect(Collectors.toList());
     }
-
+    
     @Transactional
     public void execute() {
         entityManager.flush();
         entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
         for (String tableName : tableNames) {
-            entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
-            entityManager.createNativeQuery("ALTER TABLE " + tableName + " AUTO_INCREMENT = 1")
+            String convertedTableName = convertToSnakeCase(tableName);
+            entityManager.createNativeQuery("TRUNCATE TABLE " + convertedTableName).executeUpdate();
+            entityManager.createNativeQuery("ALTER TABLE " + convertedTableName + " AUTO_INCREMENT = 1")
                 .executeUpdate();
         }
         entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+    }
+    
+    private String convertToSnakeCase(String input) {
+        return input.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
     }
 }
