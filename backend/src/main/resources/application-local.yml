@@ -31,12 +31,32 @@ spring:
     username: tech_local
     password: local!32
 
-logging:
-  level:
-    org.hibernate.SQL: debug                  # 실행 query 확인
-    org.springframework.orm.jpa: DEBUG
-    org.springframework.transaction: DEBUG
-    org.hibernate.type.descriptor.sql: trace
+security:
+  jwt:
+    token:
+      secret-key: tech-posts-local-secret-key
+      access-token-expire-length: 3600000 # 1 hour for access token
+      refresh-token-expire-length: 1209600000 # 2 weeks for refresh token
+
+kakao:
+  auth:
+    token-uri: https://kauth.kakao.com/oauth/token
+    client-id: e2645956d195649b289525e32a89ecab
+    client-secret: e2645956d195649b289525e32a89ecab
+    redirect-uri: http://localhost:3000/api/auth/kakao/callback
+
+  user:
+    profile-uri: https://kapi.kakao.com/v2/user/me
+
+naver:
+  auth:
+    token-uri: https://nid.naver.com/oauth2.0/token
+    client-id: fQ41lAPpIHNYkUrtChyx
+    client-secret: g9XJR2wnKR
+    redirect-uri: http://localhost:3000/api/auth/naver/callback
+
+  user:
+    profile-uri: https://openapi.naver.com/v1/nid/me
 
 rss:
   cron: "0 * * * * *"
@@ -46,7 +66,12 @@ slack:
     server-error-url: https://hooks.slack.com/services/ # FIX ME
     rss-reader-url: https://hooks.slack.com/services/ # FIX ME
 
-
+logging:
+  level:
+    org.hibernate.SQL: debug                  # 실행 query 확인
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    org.hibernate.type.descriptor.sql: trace
 
 springdoc:
   api-docs:

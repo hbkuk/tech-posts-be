@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
 
 spring:
   config:
@@ -30,6 +30,33 @@ spring:
     url: jdbc:mysql://localhost:3308/tech_test?rewriteBatchedStatements=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: tech_test
     password: test!32
+
+security:
+  jwt:
+    token:
+      secret-key: tech-posts-test-secret-key
+      access-token-expire-length: 3600000 # 1 hour for access token
+      refresh-token-expire-length: 1209600000 # 2 weeks for refresh token
+
+kakao:
+  auth:
+    token-uri: /kakao/oauth/token
+    client-id: tech-posts-test-kakao-client-id
+    client-secret: tech-posts-test-kakao-client-secret
+    redirect-uri: /api/auth/kakao/callback
+
+  user:
+    profile-uri: /kakao/v2/user/me
+
+naver:
+  auth:
+    token-uri: /naver/oauth/token
+    client-id: tech-posts-test-naver-client-id
+    client-secret: tech-posts-test-naver-client-secret
+    redirect-uri: /api/auth/naver/callback
+
+  user:
+    profile-uri: /naver/v1/nid/me
 
 slack:
   webhook:

@@ -2,6 +2,7 @@ package com.techbloghub.common.exception;
 
 import static com.techbloghub.common.exception.common.ErrorCode.NOT_FOUND_COOKIE;
 import static com.techbloghub.common.exception.common.ErrorCode.UNHANDLED_EXCEPTION;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 import com.techbloghub.common.alert.slack.SlackErrorLogger;
@@ -36,7 +37,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 @ControllerAdvice
 @RequiredArgsConstructor
-public class GlobalExceptionAdvice {
+public class GlobalExceptionHandler {
 
     private BodyBuilder baseHandler(BusinessException e) {
         return ResponseEntity.status(e.getErrorCode().getHttpStatus());
@@ -84,7 +85,7 @@ public class GlobalExceptionAdvice {
     public ResponseEntity<ErrorResponse> handleCommonExceptions(Exception e) {
         log.warn("Common Exception", e);
 
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
+        return ResponseEntity.status(BAD_REQUEST)
             .body(ErrorResponse.from(UNHANDLED_EXCEPTION));
     }
 
