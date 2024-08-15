@@ -1,5 +1,8 @@
 package com.techbloghub.common.domain.pagination.dto;
 
+import com.techbloghub.common.domain.pagination.CursorPaged;
+import com.techbloghub.core.post.domain.Post;
+import com.techbloghub.core.post.presentation.dto.PostResponse;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

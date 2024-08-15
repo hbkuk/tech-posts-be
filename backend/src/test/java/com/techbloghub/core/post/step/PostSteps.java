@@ -1,39 +1,41 @@
 package com.techbloghub.core.post.step;
 
 import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
 
-import com.techbloghub.common.domain.pagination.PaginationRequest;
-import com.techbloghub.core.post.domain.Post;
+import com.techbloghub.core.post.domain.Sort;
+import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 
 public class PostSteps {
-
-    public static final int 페이지_기본_사이즈 = 10;
-
-    public static ExtractableResponse<Response> 게시글_목록_요청() {
+    
+    public static ExtractableResponse<Response> 실패하는_게시글_목록_요청() {
         return given().log().all()
             .when().log().all()
             .get("/api/posts")
             .then().log().all()
-            .statusCode(HttpStatus.OK.value())
+            .statusCode(HttpStatus.BAD_REQUEST.value())
             .extract();
     }
-
-    public static ExtractableResponse<Response> 게시글_목록_요청(PaginationRequest 페이지_요청_정보) {
+    
+    public static ExtractableResponse<Response> 게시글_목록_요청(PostSearchConditionRequest request) {
         Map<String, String> 파라미터_목록 = new HashMap<>();
-        파라미터_목록.put("size", String.valueOf(페이지_요청_정보.getSize()));
-        파라미터_목록.put("page", String.valueOf(페이지_요청_정보.getNumber()));
-        파라미터_목록.put("sortBy", String.valueOf(페이지_요청_정보.getSortBy()));
-        파라미터_목록.put("direction", String.valueOf(페이지_요청_정보.getDirection()));
-
+        
+        if (request.getSort() != null && !request.getSort().isEmpty()) {
+            파라미터_목록.put("sort", request.getSort());
+        }
+        
+        if (request.getCursor() != null) {
+            파라미터_목록.put("lastId", String.valueOf(request.getCursor()));
+        }
+        
+        if (request.getItemsPerPage() > 0) {
+            파라미터_목록.put("itemsPerPage", String.valueOf(request.getItemsPerPage()));
+        }
+        
         return given().log().all()
             .params(파라미터_목록)
             .when().log().all()
@@ -42,32 +44,17 @@ public class PostSteps {
             .statusCode(HttpStatus.OK.value())
             .extract();
     }
-
-    public static void 게시글_목록_확인(List<Post> 저장된_게시글_목록, ExtractableResponse<Response> 응답된_게시글_목록) {
-        List<String> 예상하는_응답된_게시글_제목_목록 = 저장된_게시글_목록.stream()
-            .sorted(Comparator.comparing(Post::getPublishAt).reversed())
-            .limit(페이지_기본_사이즈)
-            .map(Post::getTitle)
-            .collect(Collectors.toList());
-
-        List<String> 응답된_게시글_제목_목록 = 게시글_제목만_분류(응답된_게시글_목록);
-        assertThat(응답된_게시글_제목_목록).isEqualTo(예상하는_응답된_게시글_제목_목록);
+    
+    public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(Sort sort, int itemPerPage) {
+        return PostSearchConditionRequest.builder()
+            .sort(sort.name())
+            .itemsPerPage(itemPerPage)
+            .build();
     }
-
-    public static List<String> 게시글_제목만_분류(ExtractableResponse<Response> 게시글_목록_응답) {
-        return 게시글_목록_응답.jsonPath().getList("items.title", String.class);
-    }
-
-    public static void 게시글_목록_확인(PaginationRequest 페이지_요청_정보, List<Post> 저장된_게시글_목록,
-        ExtractableResponse<Response> 응답된_게시글_목록) {
-        var 예상하는_응답된_게시글_제목_목록 = 저장된_게시글_목록.stream()
-            .sorted(Comparator.comparing(Post::getPublishAt).reversed())
-            .skip(5) // TODO: 페이지 계산 필요
-            .limit(페이지_요청_정보.getSize())
-            .map(Post::getTitle)
-            .collect(Collectors.toList());
-        var 응답된_게시글_제목_목록 = 게시글_제목만_분류(응답된_게시글_목록);
-
-        assertThat(응답된_게시글_제목_목록).isEqualTo(예상하는_응답된_게시글_제목_목록);
+    
+    public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(int itemsPerPage) {
+        return PostSearchConditionRequest.builder()
+            .itemsPerPage(itemsPerPage)
+            .build();
     }
 }

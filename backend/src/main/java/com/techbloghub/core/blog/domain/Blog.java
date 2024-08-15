@@ -1,5 +1,7 @@
 package com.techbloghub.core.blog.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,4 +24,14 @@ public enum Blog {
     private final String koreanName;
     private final String englishName;
     private final String blogUrl;
+    
+    public static Blog of(String value) {
+        if(value == null || value.isBlank()) {
+            return null;
+        }
+        return Arrays.stream(Blog.values())
+            .filter(blog -> blog.englishName.equals(value.toUpperCase()))
+            .findFirst()
+            .orElse(null);
+    }
 }

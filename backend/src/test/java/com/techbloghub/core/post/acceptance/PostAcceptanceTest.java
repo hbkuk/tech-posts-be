@@ -12,7 +12,8 @@ import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.Category;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
-import com.techbloghub.core.post.presentation.dto.PostFindAllRequest;
+import com.techbloghub.core.post.domain.Sort;
+import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -53,30 +54,12 @@ public class PostAcceptanceTest extends AcceptanceTest {
             개수만큼_게시글_등록(우아한형제들, 20);
 
             // when
-            var 게시글_목록_요청_조건 = 게시글_목록_요청_조건_생성(Category.ALL, 12);
+            var 게시글_목록_요청_조건 = 게시글_목록_요청_조건_생성(Sort.LATEST, 12);
             
             // then
             게시글_목록_요청(게시글_목록_요청_조건);
         }
         
-        /**
-         * given  게시글을 등록한다.
-         * And    게시글 목록 요청과 관련된 조건을 설정한다.
-         * When   특정 조건으로 게시글 목록을 요청한다.
-         * Then   특정 조건으로 선택된 게시글 목록이 응답된다.
-         */
-        @Test
-        void 페이지_정보를_포함한_게시글_목록_요청() {
-            // given
-            개수만큼_게시글_등록(우아한형제들, 40);
-            
-            // when
-            PostFindAllRequest 게시글_목록_요청_조건 = 게시글_목록_요청_조건_생성(Category.ALL, 카카오, "LATEST", 32);
-            
-            // then
-            게시글_목록_요청(게시글_목록_요청_조건);
-
-        }
         
         private void 개수만큼_게시글_등록(Blog 블로그, int 개수) {
             List<Post> 생성된_게시글_데이터 = 게시글_테스트_데이터_생성하기(블로그, 개수);
