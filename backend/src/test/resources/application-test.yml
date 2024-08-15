@@ -67,6 +67,7 @@ slack:
 logging:
   level:
     org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace # query parameter log
+    org.hibernate.type.descriptor.sql: trace
     org.springframework.orm.jpa: DEBUG
     org.springframework.transaction: DEBUG
-    org.hibernate.type.descriptor.sql: trace

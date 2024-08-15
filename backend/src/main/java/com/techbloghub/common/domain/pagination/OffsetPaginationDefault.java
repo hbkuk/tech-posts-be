@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PaginationDefault {
+public @interface OffsetPaginationDefault {
 
     int page() default 1;
 

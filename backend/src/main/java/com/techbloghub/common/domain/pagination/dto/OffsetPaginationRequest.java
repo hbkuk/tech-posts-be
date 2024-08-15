@@ -1,4 +1,4 @@
-package com.techbloghub.common.domain.pagination;
+package com.techbloghub.common.domain.pagination.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 @Getter
 @AllArgsConstructor
 @Schema(description = "페이지네이션 요청")
-public class PaginationRequest {
+public class OffsetPaginationRequest {
 
     @Schema(description = "페이지 번호", example = "3")
     private int number;

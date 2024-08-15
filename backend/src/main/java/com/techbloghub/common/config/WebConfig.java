@@ -1,6 +1,6 @@
 package com.techbloghub.common.config;
 
-import com.techbloghub.common.domain.pagination.PaginationArgumentResolver;
+import com.techbloghub.common.domain.pagination.OffsetPaginationArgumentResolver;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -9,14 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    private final PaginationArgumentResolver paginationArgumentResolver;
+    private final OffsetPaginationArgumentResolver offsetPaginationArgumentResolver;
 
-    public WebConfig(PaginationArgumentResolver paginationArgumentResolver) {
-        this.paginationArgumentResolver = paginationArgumentResolver;
+    public WebConfig(OffsetPaginationArgumentResolver offsetPaginationArgumentResolver) {
+        this.offsetPaginationArgumentResolver = offsetPaginationArgumentResolver;
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(paginationArgumentResolver);
+        argumentResolvers.add(offsetPaginationArgumentResolver);
     }
 }

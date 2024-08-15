@@ -1,5 +1,6 @@
 package com.techbloghub.common.domain.pagination;
 
+import com.techbloghub.common.domain.pagination.dto.OffsetPaginationRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -9,29 +10,29 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class PaginationArgumentResolver implements HandlerMethodArgumentResolver {
+public class OffsetPaginationArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(PaginationDefault.class);
+        return parameter.hasParameterAnnotation(OffsetPaginationDefault.class);
     }
 
     @Override
-    public PaginationRequest resolveArgument(MethodParameter parameter,
+    public OffsetPaginationRequest resolveArgument(MethodParameter parameter,
         ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest,
         WebDataBinderFactory binderFactory) {
-        PaginationDefault paginationDefault = parameter.getParameterAnnotation(
-            PaginationDefault.class);
+        OffsetPaginationDefault offsetPaginationDefault = parameter.getParameterAnnotation(
+            OffsetPaginationDefault.class);
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
 
-        int number = parseOrDefault(request.getParameter("number"), paginationDefault.page());
-        int size = parseOrDefault(request.getParameter("size"), paginationDefault.size());
-        String sortBy = getOrDefault(request.getParameter("sortBy"), paginationDefault.sort());
+        int number = parseOrDefault(request.getParameter("number"), offsetPaginationDefault.page());
+        int size = parseOrDefault(request.getParameter("size"), offsetPaginationDefault.size());
+        String sortBy = getOrDefault(request.getParameter("sortBy"), offsetPaginationDefault.sort());
         String direction = getOrDefault(request.getParameter("direction"),
-            paginationDefault.direction());
+            offsetPaginationDefault.direction());
 
-        return new PaginationRequest(number, size, sortBy, direction);
+        return new OffsetPaginationRequest(number, size, sortBy, direction);
     }
 
     private int parseOrDefault(String param, int defaultValue) {
