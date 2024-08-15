@@ -22,7 +22,7 @@ public class PostServiceTest extends ApplicationTest {
 
     @Autowired
     PostRepository postRepository;
-
+    
     @Nested
     class 게시글_등록 {
 

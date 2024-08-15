@@ -1,10 +1,11 @@
 package com.techbloghub.core.post.application;
 
-import com.techbloghub.common.domain.pagination.PagedResponse;
+import com.techbloghub.common.domain.pagination.CursorPaged;
 import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.application.dto.PostCreateRequest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
+import com.techbloghub.core.post.domain.PostSearchCondition;
 import com.techbloghub.core.post.presentation.dto.PostResponse;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +24,9 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "post", key = "#request.pageNumber + '-' + #request.pageSize + '-' + #request.sort.toString()")
-    public PagedResponse<PostResponse> findAll(Pageable request) {
-        Page<Post> posts = postRepository.findAll(request);
-        return convertPagedResponse(mapPostResponse(posts), posts);
+    @Cacheable(cacheNames = "post", key = "#condition.sort.toString() + '-' + #condition.cursor + '-' + #condition.itemsPerPage")
+    public CursorPaged<Post> findAllByCondition(PostSearchCondition condition) {
+        return postRepository.findAllPostsByCondition(condition);
     }
 
     @Transactional
@@ -58,16 +57,4 @@ public class PostService {
     public Optional<LocalDateTime> getLatestPublishDate(Blog blog) {
         return postRepository.findLatestPublishDate(blog);
     }
-
-    private PagedResponse<PostResponse> convertPagedResponse(
-        List<PostResponse> postResponses, Page<Post> posts) {
-        return new PagedResponse<>(
-            postResponses,
-            posts.getNumber(),
-            posts.getTotalPages(),
-            posts.getTotalElements(),
-            posts.getSize()
-        );
-    }
-
 }
