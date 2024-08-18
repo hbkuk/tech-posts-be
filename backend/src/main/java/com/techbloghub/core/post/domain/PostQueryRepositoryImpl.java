@@ -9,14 +9,16 @@ import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.techbloghub.common.domain.pagination.CursorPaged;
+import com.techbloghub.core.blog.domain.Blog;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class PostRepositoryImpl implements PostRepositoryCustom {
+public class PostQueryRepositoryImpl implements PostQueryRepository {
     
     private final JPAQueryFactory queryFactory;
     
@@ -44,6 +46,19 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
         }
         
         return new CursorPaged<>(posts, condition.getItemsPerPage(), hasMoreItems);
+    }
+    
+    @Override
+    public Optional<LocalDateTime> findLatestPublishDate(Blog blog) {
+        LocalDateTime latestPublishDate = queryFactory
+            .select(post.publishAt)
+            .from(post)
+            .where(post.blog.eq(blog))
+            .orderBy(post.publishAt.desc())
+            .limit(1)
+            .fetchOne();
+        
+        return Optional.ofNullable(latestPublishDate);
     }
     
     /**

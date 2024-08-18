@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 import com.techbloghub.common.domain.pagination.CursorPaged;
 import com.techbloghub.common.util.ApplicationTest;
 import com.techbloghub.core.post.domain.Post;
-import com.techbloghub.core.post.domain.PostRepositoryImpl;
+import com.techbloghub.core.post.domain.PostQueryRepositoryImpl;
 import com.techbloghub.core.post.domain.PostSearchCondition;
 import com.techbloghub.core.post.domain.Sort;
 import java.util.Comparator;
@@ -30,7 +30,7 @@ public class PostServiceMockTest extends ApplicationTest {
     PostService postService;
 
     @MockBean
-    PostRepositoryImpl postRepository;
+    PostQueryRepositoryImpl postRepository;
 
     @Test
     void 검색_조건에_따른_게시글_목록_캐싱_확인() {

@@ -21,7 +21,7 @@ public class PostRepositoryTest extends RepositoryTest {
     PostRepository postRepository;
     
     @Autowired
-    PostRepositoryImpl postRepositoryImpl;
+    PostQueryRepositoryImpl postRepositoryImpl;
     
     @Test
     void 최신순으로_게시글_목록_조회() {

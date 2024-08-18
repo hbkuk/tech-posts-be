@@ -1,7 +1,6 @@
 package com.techbloghub.core.post.acceptance;
 
 import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
-import static com.techbloghub.core.blog.domain.Blog.카카오;
 import static com.techbloghub.core.post.step.PostSteps.게시글_목록_요청;
 import static com.techbloghub.core.post.step.PostSteps.게시글_목록_요청_조건_생성;
 import static com.techbloghub.core.post.step.PostSteps.실패하는_게시글_목록_요청;
@@ -9,11 +8,9 @@ import static com.techbloghub.core.post.util.PostTestUtil.게시글_테스트_�
 
 import com.techbloghub.common.util.AcceptanceTest;
 import com.techbloghub.core.blog.domain.Blog;
-import com.techbloghub.core.post.domain.Category;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
 import com.techbloghub.core.post.domain.Sort;
-import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

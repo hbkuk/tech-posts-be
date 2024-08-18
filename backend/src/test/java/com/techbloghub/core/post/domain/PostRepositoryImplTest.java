@@ -20,7 +20,7 @@ public class PostRepositoryImplTest extends RepositoryTest {
     PostRepository postRepository;
     
     @Autowired
-    PostRepositoryImpl postRepositoryImpl;
+    PostQueryRepositoryImpl postRepositoryImpl;
     
     @Test
     void null_조건으로_커서_생성() {
