@@ -11,7 +11,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.techbloghub.common.domain.pagination.CursorPaged;
 import com.techbloghub.core.blog.domain.Blog;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -91,10 +93,13 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         String customCursorPublishDate;
         String customCursorId;
         
-        customCursorPublishDate = publishDate.toString()       // LocalDateTime을 문자열로 변환
+        // publishDate에서 초 단위를 제거하고 분 단위까지만 사용
+        LocalDateTime truncatedDate = Objects.requireNonNull(publishDate).truncatedTo(ChronoUnit.MINUTES);
+        
+        customCursorPublishDate = truncatedDate.toString()  // LocalDateTime을 문자열로 변환
             .replaceAll("T", "")
             .replaceAll("-", "")
-            .replaceAll(":", "") + "00";    // 나노초를 00으로 고정
+            .replaceAll(":", "") + "00";  // 초 단위를 00으로 고정
         
         customCursorPublishDate = String.format("%1$" + 20 + "s", customCursorPublishDate)
             .replace(' ', '0'); // 문자열 길이를 20자로 맞추고 남는 부분을 0으로 채움
