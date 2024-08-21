@@ -41,8 +41,7 @@ public class PostService {
                 request.getBlog(),
                 request.getLink(),
                 request.getTitle(),
-                request.getPostedAt(),
-                request.getDescription()))
+                request.getPostedAt()))
             .toList()
             .forEach(this::registerPost);
     }

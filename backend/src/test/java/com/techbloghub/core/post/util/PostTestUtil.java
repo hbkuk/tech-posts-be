@@ -16,8 +16,7 @@ public class PostTestUtil {
                         블로그,
                         "https://techblog.woowahan.com/" + postIndex,
                         "더미 타이틀 " + postIndex,
-                        LocalDateTime.now().plusDays(postIndex).withSecond(0).withNano(0),
-                        "더미 설명 " + postIndex
+                        LocalDateTime.now().plusDays(postIndex).withSecond(0).withNano(0)
                 ))
                 .collect(Collectors.toList());
     }

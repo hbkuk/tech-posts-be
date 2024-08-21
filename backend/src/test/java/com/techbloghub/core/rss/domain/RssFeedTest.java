@@ -42,94 +42,9 @@ public class RssFeedTest {
                 // then
                 assertAll(
                         () -> assertEquals(피드_아이템.getTitle().get(), 피드.getTitle()),
-                        () -> assertEquals(피드_아이템.getDescription().get(), 피드.getDescription()),
                         () -> assertEquals(LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(피드_아이템.getPubDate().get())), 피드.getPublishAt()),
                         () -> assertEquals(피드_아이템.getLink().get(), 피드.getLink())
                 );
-            }
-
-            @Nested
-            class 피드_설명_가져오기 {
-
-                @Test
-                void 피드_설명_그대로_가져오기() {
-                    // given
-                    String 피드_설명 = "보완재 추천 모델을 서빙하기 위한 아키텍처 소개";
-
-                    Item 피드_아이템 = new Item(new DateTime());
-                    피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
-                    피드_아이템.setDescription(피드_설명);
-                    피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
-                    피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
-
-                    // when
-                    RssFeed 피드 = new RssFeed(피드_아이템);
-
-                    // then
-                    assertEquals(피드_설명, 피드.getDescription());
-                }
-
-                @DisplayName("피드의 설명이 길 경우, 일부 설명은 생략된다.")
-                @Test
-                void 긴_피드_설명일_경우_일부_문자열은_생략() {
-                    // given
-                    String 피드_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프카를 기반으로 한 다양한 기술적 개념에 대해서 얇고 넓게 소개합니다.";
-
-                    Item 피드_아이템 = new Item(new DateTime());
-                    피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
-                    피드_아이템.setDescription(피드_설명);
-                    피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
-                    피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
-
-                    // when
-                    RssFeed 피드 = new RssFeed(피드_아이템);
-
-                    // then
-                    String 예상되는_설명 = "누가 읽으면 좋을까? 카프카(Kafka)가 무엇인지 알고 있는 독자를 대상으로 합니다. 기술적 구현방식을 다루기보단 카프...";
-                    assertEquals(예상되는_설명, 피드.getDescription());
-                }
-
-                @Test
-                void 설명이_없을_경우_빈_문자열() {
-                    // given
-                    Item 피드_아이템 = new Item(new DateTime());
-                    피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
-                    피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
-                    피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
-
-                    // when
-                    RssFeed 피드 = new RssFeed(피드_아이템);
-
-                    // then
-                    assertEquals("", 피드.getDescription());
-                }
-
-                @DisplayName("피드의 설명에 html 태그가 포함되어 있을 경우 html 태그는 삭제된다.")
-                @ParameterizedTest
-                @CsvSource(value = {
-                        "<p>이것은 <b>굵은</b> 텍스트입니다.</p>$이것은 굵은 텍스트입니다.",
-                        "<div>안녕하세요, <a href='https://example.com'>여기를 클릭</a>하세요.</div>$안녕하세요, 여기를 클릭하세요.",
-                        "<h1>사이트에 오신 것을 환영합니다</h1>$사이트에 오신 것을 환영합니다",
-                        "<ul><li>항목 1</li><li>항목 2</li></ul>$항목 1항목 2",
-                        "<span style='color: red;'>빨간 텍스트</span>$빨간 텍스트",
-                        "<!-- 이건 주석입니다 -->보이는 텍스트$보이는 텍스트",
-                        "<script>alert('안녕하세요');</script>스크립트 뒤 텍스트$스크립트 뒤 텍스트",
-                        "HTML 태그가 없는 경우$HTML 태그가 없는 경우"
-                }, delimiter = '$')
-                void html_태그가_삭제된_설명(String html_태그가_포함된_피드_설명, String html_태그가_삭제된_피드_설명) {
-                    // given
-                    Item 피드_아이템 = new Item(new DateTime());
-                    피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
-                    피드_아이템.setPubDate("Mon, 27 May 2024 10:00:00 +0900");
-                    피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
-                    피드_아이템.setDescription(html_태그가_포함된_피드_설명);
-
-                    // when
-                    RssFeed 피드 = new RssFeed(피드_아이템);
-
-                    // then
-                    assertEquals(html_태그가_삭제된_피드_설명, 피드.getDescription());
-                }
             }
 
             @Nested

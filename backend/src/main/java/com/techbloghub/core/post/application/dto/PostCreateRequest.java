@@ -18,9 +18,7 @@ public class PostCreateRequest {
 
     private LocalDateTime postedAt;
 
-    private String description;
-
-    public static PostCreateRequest of(Blog blog, String link, String title, LocalDateTime postedAt, String description) {
-        return new PostCreateRequest(blog, link, title, postedAt, description);
+    public static PostCreateRequest of(Blog blog, String link, String title, LocalDateTime postedAt) {
+        return new PostCreateRequest(blog, link, title, postedAt);
     }
 }

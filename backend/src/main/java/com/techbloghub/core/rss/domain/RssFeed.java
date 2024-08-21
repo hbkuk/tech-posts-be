@@ -18,34 +18,16 @@ import static com.techbloghub.common.util.StringUtil.getFilteredContent;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RssFeed {
 
-    public static final int MAX_DESCRIPTION_LENGTH = 67;
-
     private String link;
 
     private String title;
 
     private LocalDateTime publishAt;
 
-    private String description;
-
     public RssFeed(Item feed) {
         this.link = getLink(feed.getLink());
         this.title = getTitle(feed.getTitle());
         this.publishAt = getPublishDateOrNow(feed.getPubDate());
-        this.description = getDescriptionOrDefault(feed.getDescription());
-    }
-
-    private String getDescriptionOrDefault(Optional<String> description) {
-        return description
-                .map(this::getDescription)
-                .orElse("");
-    }
-
-    private String getDescription(String desc) {
-        if (desc.length() < MAX_DESCRIPTION_LENGTH) {
-            return getFilteredContent(desc);
-        }
-        return getFilteredContent(desc.substring(0, MAX_DESCRIPTION_LENGTH)) + "...";
     }
 
     private LocalDateTime getPublishDateOrNow(Optional<String> publishDate) {

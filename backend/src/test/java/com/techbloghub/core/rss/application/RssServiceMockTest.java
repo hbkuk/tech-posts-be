@@ -44,15 +44,13 @@ public class RssServiceMockTest {
             RssFeed 컬리_첫번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development_second",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부",
-                    LocalDateTime.parse("2019-07-18T18:00:00"),
-                    "보완재 추천 모델을 서빙하기 위한 아키텍처 소개"
+                    LocalDateTime.parse("2019-07-18T18:00:00")
             );
 
             RssFeed 컬리_두번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 1부",
-                    LocalDateTime.parse("2019-07-18T09:15:00"),
-                    "보완재 추천 모델을 적용하고 성과를 거둔 사례 소개"
+                    LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
             when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
@@ -71,15 +69,13 @@ public class RssServiceMockTest {
             RssFeed 컬리_첫번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development_second",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부",
-                    LocalDateTime.parse("2019-07-18T18:00:00"),
-                    "보완재 추천 모델을 서빙하기 위한 아키텍처 소개"
+                    LocalDateTime.parse("2019-07-18T18:00:00")
             );
 
             RssFeed 컬리_두번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 1부",
-                    LocalDateTime.parse("2019-07-18T09:15:00"),
-                    "보완재 추천 모델을 적용하고 성과를 거둔 사례 소개"
+                    LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
             when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
@@ -100,15 +96,13 @@ public class RssServiceMockTest {
             RssFeed 컬리_첫번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development_second",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부",
-                    LocalDateTime.parse("2019-07-18T18:00:00"),
-                    "보완재 추천 모델을 서빙하기 위한 아키텍처 소개"
+                    LocalDateTime.parse("2019-07-18T18:00:00")
             );
 
             RssFeed 컬리_두번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development",
                     "함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 1부",
-                    LocalDateTime.parse("2019-07-18T09:15:00"),
-                    "보완재 추천 모델을 적용하고 성과를 거둔 사례 소개"
+                    LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
             when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));

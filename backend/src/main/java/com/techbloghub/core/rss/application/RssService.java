@@ -37,8 +37,7 @@ public class RssService {
             blog,
             rssFeed.getLink(),
             rssFeed.getTitle(),
-            rssFeed.getPublishAt(),
-            rssFeed.getDescription()
+            rssFeed.getPublishAt()
         );
     }
 

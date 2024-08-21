@@ -21,8 +21,6 @@ public class PostResponse {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private final LocalDateTime publishAt;
 
-    private final String description;
-
     private final BlogResponse blogResponse;
 
     public static PostResponse of(Post post) {
@@ -31,7 +29,6 @@ public class PostResponse {
             post.getLink(),
             post.getTitle(),
             post.getPublishAt(),
-            post.getDescription(),
             BlogResponse.of(post.getBlog())
         );
     }
