@@ -10,6 +10,7 @@ import com.techbloghub.core.post.presentation.dto.PostResponse;
 import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +23,7 @@ public class PostController {
     private final PostService postService;
     
     @GetMapping("/api/posts")
-    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute PostSearchConditionRequest request) {
+    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute @ParameterObject PostSearchConditionRequest request) {
         CursorPaged<Post> cursorPaged = postService.findAllByCondition(request.toEntity());
         return ResponseEntity.ok(convertResponse(cursorPaged));
     }
