@@ -53,6 +53,11 @@ jobs:
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             SLACK_SERVER_ERROR_URL=${{ secrets.SLACK_SERVER_ERROR_URL }}
             SLACK_RSS_READER_URL=${{ secrets.SLACK_RSS_READER_URL }}
+            JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+            KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
+            KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}
+            NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}
+            NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}
 
       - name: Run deploy script
         uses: appleboy/ssh-action@v0.1.4
