@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Table(
     indexes = {
-        @Index(name = "idx_post_covering", columnList = "publishAt, id, blog, link, title")
+        @Index(name = "idx_post_covering", columnList = "publishAt DESC, id, blog, link, title")
     }
 )
 @Entity
