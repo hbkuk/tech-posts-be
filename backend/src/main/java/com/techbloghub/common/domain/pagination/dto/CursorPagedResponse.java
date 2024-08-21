@@ -17,4 +17,6 @@ public class CursorPagedResponse<T> {
     
     private boolean hasMoreItems;
     
+    private final String lastCursor;
+    
 }

@@ -13,6 +13,6 @@ public class PostConverter {
             .map(PostResponse::of)
             .toList();
         return new CursorPagedResponse<>(postResponses, cursorPaged.getItemsPerPage(),
-            cursorPaged.isHasMoreItems());
+            cursorPaged.isHasMoreItems(), cursorPaged.getLastCursor());
     }
 }

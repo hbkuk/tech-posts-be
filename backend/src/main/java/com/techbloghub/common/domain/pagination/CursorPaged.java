@@ -8,10 +8,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CursorPaged<T> {
     
-    private List<T> items;
+    private final List<T> items;
     
-    private int itemsPerPage;
+    private final int itemsPerPage;
     
-    private boolean hasMoreItems;
-
+    private final boolean hasMoreItems;
+    
+    private final String lastCursor;
 }

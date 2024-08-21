@@ -47,7 +47,15 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
             posts = posts.subList(0, condition.getItemsPerPage());
         }
         
-        return new CursorPaged<>(posts, condition.getItemsPerPage(), hasMoreItems);
+        return new CursorPaged<>(
+            posts,
+            condition.getItemsPerPage(),
+            hasMoreItems,
+            generateCustomCursor(
+                posts.get(posts.size() -1).getPublishAt(),
+                posts.get(posts.size() -1).getId()
+            )
+        );
     }
     
     @Override

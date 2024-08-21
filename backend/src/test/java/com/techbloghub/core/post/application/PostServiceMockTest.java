@@ -42,7 +42,7 @@ public class PostServiceMockTest extends ApplicationTest {
             .itemsPerPage(10)
             .build();
         
-        when(postRepository.findAllPostsByCondition(검색_조건)).thenReturn(new CursorPaged<>(생성된_게시글_목록, 10, true));
+        when(postRepository.findAllPostsByCondition(검색_조건)).thenReturn(new CursorPaged<>(생성된_게시글_목록, 10, true, "000000000000000000000000000000"));
 
         // when
         
@@ -77,8 +77,8 @@ public class PostServiceMockTest extends ApplicationTest {
             .sorted(Comparator.comparing(Post::getPublishAt))
             .collect(Collectors.toList());
         
-        when(postRepository.findAllPostsByCondition(첫번째_검색_조건)).thenReturn(new CursorPaged<>(정렬된_게시글_목록_최신순, 10, true));
-        when(postRepository.findAllPostsByCondition(두번째_검색_조건)).thenReturn(new CursorPaged<>(정렬된_게시글_목록_오래된순, 15, true));
+        when(postRepository.findAllPostsByCondition(첫번째_검색_조건)).thenReturn(new CursorPaged<>(정렬된_게시글_목록_최신순, 10, true, "000000000000000000000000000000"));
+        when(postRepository.findAllPostsByCondition(두번째_검색_조건)).thenReturn(new CursorPaged<>(정렬된_게시글_목록_오래된순, 15, true, "000000000000000000000000000000"));
         
         // when
         IntStream.range(0, 10).forEach((count) -> {
