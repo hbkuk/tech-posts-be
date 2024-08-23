@@ -15,7 +15,7 @@ public class BlogResponse {
     @Schema(description = "회사명 (영어)", example = "TOSS")
     private final String companyNameEnglish;
 
-    @Schema(description = "블로그 URL", example = "https://toss.tech/rss.xml")
+    @Schema(description = "블로그 URL", example = "https://toss.tech")
     private final String blogUrl;
 
     public static BlogResponse of(Blog blog) {

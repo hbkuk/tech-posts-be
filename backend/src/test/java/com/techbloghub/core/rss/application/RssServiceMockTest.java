@@ -53,7 +53,7 @@ public class RssServiceMockTest {
                     LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
-            when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
+            when(rssFeedReader.read(컬리.getRssFeedUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
 
             // when
             rssService.syncFeeds(컬리);
@@ -78,7 +78,7 @@ public class RssServiceMockTest {
                     LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
-            when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
+            when(rssFeedReader.read(컬리.getRssFeedUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
 
             when(postService.getLatestPublishDate(컬리)).thenReturn(Optional.of(LocalDateTime.parse("2019-07-18T17:00:00")));
 
@@ -105,7 +105,7 @@ public class RssServiceMockTest {
                     LocalDateTime.parse("2019-07-18T09:15:00")
             );
 
-            when(rssFeedReader.read(컬리.getBlogUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
+            when(rssFeedReader.read(컬리.getRssFeedUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
 
             when(postService.getLatestPublishDate(컬리)).thenReturn(Optional.of(LocalDateTime.parse("2019-07-18T18:00:00")));
 

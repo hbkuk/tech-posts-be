@@ -4,7 +4,6 @@ import com.apptasticsoftware.rssreader.DateTime;
 import com.apptasticsoftware.rssreader.Item;
 import com.apptasticsoftware.rssreader.RssReader;
 import com.techbloghub.core.rss.domain.RssFeed;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +58,7 @@ public class RssFeedReaderMockTest {
 
 
             // when
-            List<RssFeed> 읽은_피드 = rssFeedReader.read(컬리.getBlogUrl());
+            List<RssFeed> 읽은_피드 = rssFeedReader.read(컬리.getRssFeedUrl());
 
             // then
             assertEquals(List.of(new RssFeed(컬리_첫번째_피드_아이템), new RssFeed(컬리_두번째_피드_아이템)), 읽은_피드);
