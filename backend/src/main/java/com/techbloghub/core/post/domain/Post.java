@@ -34,7 +34,7 @@ public class Post extends BaseEntity {
     @Column(length = 10)
     private Blog blog;
     
-    @Column(length = 255)
+    @Column(length = 500)
     private String link;
     
     @Column(length = 100)
