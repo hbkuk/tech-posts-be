@@ -22,12 +22,26 @@ public class DateConverterTest {
     }, delimiter = '$')
     void RFC_822_타입을_ISO_8601_타입으로_변환(String RFC_822_타입의_날짜_문자열, String ISO_8601_타입의_날짜_문자열) throws ParseException {
         // when
-        String ISO_8601_타입으로_변환된_날짜 = DateConverter.convertRfc822ToIso8601(RFC_822_타입의_날짜_문자열);
+        String ISO_8601_타입으로_변환된_날짜 = DateConverter.convertToIso8601(RFC_822_타입의_날짜_문자열);
 
         // then
         assertEquals(ISO_8601_타입의_날짜_문자열, ISO_8601_타입으로_변환된_날짜);
     }
-
+    
+    @ParameterizedTest
+    @CsvSource(value = {
+        "2023-05-30T00:00:00+0000$2023-05-30T00:00:00",
+        "2023-05-30T00:00:00+0900$2023-05-30T00:00:00",
+    }, delimiter = '$')
+    void 시간_오프셋이_있는_날짜를_UTC_기준_ISO_8601_타입으로_변환(String 시간_오프셋이_있는_날짜_문자열, String 기대되는_UTC_기준_ISO_8601_날짜_문자열) throws ParseException {
+        // when
+        String ISO_8601_타입으로_변환된_날짜 = DateConverter.convertToIso8601(시간_오프셋이_있는_날짜_문자열);
+        
+        // then
+        assertEquals(ISO_8601_타입으로_변환된_날짜, 기대되는_UTC_기준_ISO_8601_날짜_문자열);
+    }
+    
+    
     @ParameterizedTest
     @ValueSource(strings = {"Invalid Date", "Error", "null"})
     @DisplayName("날짜 데이터가 아닌 경우 파싱 예외가 발생한다.")
@@ -36,7 +50,7 @@ public class DateConverterTest {
         // when, then
         assertThatExceptionOfType(ParseException.class)
                 .isThrownBy(() -> {
-                    DateConverter.convertRfc822ToIso8601(날짜_데이터가_아닌_문자열);
+                    DateConverter.convertToIso8601(날짜_데이터가_아닌_문자열);
                 });
     }
 }
