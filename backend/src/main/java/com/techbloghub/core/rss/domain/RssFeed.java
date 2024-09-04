@@ -16,6 +16,7 @@ import static com.techbloghub.common.util.StringUtil.getFilteredContent;
 @AllArgsConstructor
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
 public class RssFeed {
 
     private String link;
@@ -37,7 +38,8 @@ public class RssFeed {
 
     private LocalDateTime getLocalDateTime(String pubDate) {
         try {
-            return LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(pubDate));
+            log.info("pubDate : {}", pubDate);
+            return LocalDateTime.parse(DateConverter.convertToIso8601(pubDate));
         } catch (ParseException e) {
             log.error("Error parsing", e);
             return LocalDateTime.now().withSecond(0).withNano(0);

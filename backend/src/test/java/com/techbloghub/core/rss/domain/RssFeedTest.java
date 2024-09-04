@@ -3,6 +3,9 @@ package com.techbloghub.core.rss.domain;
 import com.apptasticsoftware.rssreader.DateTime;
 import com.apptasticsoftware.rssreader.Item;
 import com.techbloghub.common.util.DateConverter;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -42,7 +45,7 @@ public class RssFeedTest {
                 // then
                 assertAll(
                         () -> assertEquals(피드_아이템.getTitle().get(), 피드.getTitle()),
-                        () -> assertEquals(LocalDateTime.parse(DateConverter.convertRfc822ToIso8601(피드_아이템.getPubDate().get())), 피드.getPublishAt()),
+                        () -> assertEquals(LocalDateTime.parse(DateConverter.convertToIso8601(피드_아이템.getPubDate().get())), 피드.getPublishAt()),
                         () -> assertEquals(피드_아이템.getLink().get(), 피드.getLink())
                 );
             }
@@ -64,8 +67,29 @@ public class RssFeedTest {
                     // then
                     assertThat(피드.getPublishAt()).isEqualToIgnoringSeconds(LocalDateTime.now());
                 }
+  
+                @DisplayName("피드 아이템의 ISO-8601 형식 발행 일자를 UTC 기준 ISO-8601 형식의 발행 일자로 변환된다.")
+                @ParameterizedTest
+                @CsvSource(value = {
+                    "2023-05-30T00:00:00Z$2023-05-30T00:00:00",
+                    "2023-05-02T11:00:00Z$2023-05-02T11:00:00",
+                }, delimiter = '$')
+                void UTC_기준_ISO_8601_타입으로_변환(String ISO_8601_타입의_날짜_문자열, String 기대되는_UTC_기준_ISO_8601_날짜_문자열) {
+                    // given
+                    Item 피드_아이템 = new Item(new DateTime());
+                    피드_아이템.setTitle("함께 구매하면 좋은 상품이에요! - 장바구니 추천 개발기 2부");
+                    피드_아이템.setDescription("보완재 추천 모델을 서빙하기 위한 아키텍처 소개");
+                    피드_아이템.setPubDate(ISO_8601_타입의_날짜_문자열);
+                    피드_아이템.setLink("http://thefarmersfront.github.io/blog/cart-recommend-model-development_second");
+                    
+                    // when
+                    RssFeed 피드 = new RssFeed(피드_아이템);
+                    
+                    // then
+                    assertEquals(LocalDateTime.parse(기대되는_UTC_기준_ISO_8601_날짜_문자열), 피드.getPublishAt());
+                }
 
-                @DisplayName("피드 아이템의 발행 일자가 ISO-8601 타입일 경우 RFC-882 타입으로 변환된다.")
+                @DisplayName("피드 아이템의 발행 일자가 RFC-882 형식일 경우 ISO-8601 형식으로 변환된다.")
                 @ParameterizedTest
                 @CsvSource(value = {
                         "Thu, 18 Jul 2019 18:00:00 +0900$2019-07-18T18:00:00",
@@ -88,7 +112,7 @@ public class RssFeedTest {
                     // then
                     assertEquals(LocalDateTime.parse(ISO_8601_타입의_날짜_문자열), 피드.getPublishAt());
                 }
-
+                
                 @DisplayName("피드 아이템의 발행 일자가 날짜 데이터가 아닌 문자열일 경우 현재 날짜로 변환된다.")
                 @ValueSource(strings = {"Invalid Date", "Error", "null"})
                 @ParameterizedTest
