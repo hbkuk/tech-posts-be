@@ -46,18 +46,31 @@ public class RssFeedReader {
             throw new RssFeedReadException(ErrorCode.RSS_FEED_READ_FAILED);
         }
     }
-
+    
     private String fetchAndSanitizeRssFeed(String blogRssUrl) throws IOException {
+        HttpURLConnection connection = createHttpConnection(blogRssUrl);
+        String rawRssFeed = readInputStream(connection);
+        return sanitizeRssFeed(rawRssFeed);
+    }
+    
+    private HttpURLConnection createHttpConnection(String blogRssUrl) throws IOException {
         URL url = new URL(blogRssUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-
+        return connection;
+    }
+    
+    private String readInputStream(HttpURLConnection connection) throws IOException {
         try (InputStream inputStream = connection.getInputStream();
             BufferedReader reader = new BufferedReader(
                 new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines()
-                .collect(Collectors.joining(System.lineSeparator()))
-                .replaceAll("\\x{1c}", "");
+            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
         }
     }
+    
+    private String sanitizeRssFeed(String rawRssFeed) {
+        // 유니코드 범위에서 유효한 문자들만 남기고 그 외의 문자 제거
+        return rawRssFeed.replaceAll("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFF]+", "");
+    }
+
 }
