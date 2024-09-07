@@ -5,6 +5,11 @@ import com.techbloghub.common.exception.ForbiddenException;
 import com.techbloghub.common.exception.InternalServerErrorException;
 import com.techbloghub.common.exception.UnsupportedOAuthTypeException;
 import com.techbloghub.common.exception.common.ErrorCode;
+import com.techbloghub.core.blog.domain.Blog;
+import com.techbloghub.core.rss.application.RssService;
+import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Profile;
@@ -20,6 +25,32 @@ public class TechBlogHubApplication {
     }
 
 }
+
+@Slf4j
+@RestController
+@Profile("local")
+@RequiredArgsConstructor
+class RssFeedController {
+    
+    private final RssService rssService;
+    
+    @GetMapping("/api/rss/sync")
+    public String syncAllFeeds() {
+        log.info("Manual RSS feed sync started");
+        
+        Arrays.stream(Blog.values()).forEach(blog -> {
+            try {
+                rssService.syncFeeds(blog);
+                log.info("Successfully synced feeds for blog: {}", blog.getEnglishName());
+            } catch (Exception e) {
+                log.error("Failed to sync feeds for blog: {}", blog.getEnglishName(), e);
+            }
+        });
+        
+        return "RSS feed sync completed";
+    }
+}
+
 
 @RestController
 @RequestMapping("/api/health")
