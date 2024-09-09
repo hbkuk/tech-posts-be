@@ -20,7 +20,7 @@ public class RssFeedScheduler {
     private final RssService rssService;
     
     @SlackInfoLogger
-    @Scheduled(cron = "${rss.cron}")
+    @Scheduled(cron = "0 0 3 * * *", zone = "Asia/Seoul")
     public void syncAllFeeds() {
         // TODO 1) : 접속이 많지 않은 새벽 시간에 Thread 개수 확인해서 병렬처리
         Arrays.stream(Blog.values()).forEach(blog -> {
