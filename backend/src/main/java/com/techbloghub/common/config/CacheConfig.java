@@ -22,7 +22,7 @@ public class CacheConfig {
     public List<CaffeineCache> caffeineCaches() {
         return Arrays.stream(CacheType.values())
                 .map(cache -> new CaffeineCache(cache.getCacheName(), Caffeine.newBuilder().recordStats()
-                        .expireAfterWrite(cache.getExpiredAfterWrite(), TimeUnit.HOURS)
+                        .expireAfterWrite(cache.getExpiredAfterWrite(), TimeUnit.HOURS) // TODO: 캐시 만료 정책 수정
                         .maximumSize(cache.getMaximumSize())
                         .build()))
                 .collect(Collectors.toList());

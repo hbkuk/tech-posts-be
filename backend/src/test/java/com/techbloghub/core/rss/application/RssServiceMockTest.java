@@ -36,10 +36,10 @@ public class RssServiceMockTest {
     }
 
     @Nested
-    class 새로운_피드_가져오기 {
+    class 피드_읽기 {
 
         @Test
-        void 새로운_피드_동기화() {
+        void 특정_블로그의_피드_읽기() {
             // given
             RssFeed 컬리_첫번째_피드 = new RssFeed(
                     "http://thefarmersfront.github.io/blog/cart-recommend-model-development_second",
@@ -56,7 +56,7 @@ public class RssServiceMockTest {
             when(rssFeedReader.read(컬리.getRssFeedUrl())).thenReturn(List.of(컬리_첫번째_피드, 컬리_두번째_피드));
 
             // when
-            rssService.syncFeeds(컬리);
+            rssService.readRssFeeds(컬리);
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);
@@ -83,7 +83,7 @@ public class RssServiceMockTest {
             when(postService.getLatestPublishDate(컬리)).thenReturn(Optional.of(LocalDateTime.parse("2019-07-18T17:00:00")));
 
             // when
-            rssService.syncFeeds(컬리);
+            rssService.readRssFeeds(컬리);
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);
@@ -110,7 +110,7 @@ public class RssServiceMockTest {
             when(postService.getLatestPublishDate(컬리)).thenReturn(Optional.of(LocalDateTime.parse("2019-07-18T18:00:00")));
 
             // when
-            rssService.syncFeeds(컬리);
+            rssService.readRssFeeds(컬리);
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);

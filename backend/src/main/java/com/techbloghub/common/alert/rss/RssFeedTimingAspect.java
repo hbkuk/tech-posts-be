@@ -35,7 +35,7 @@ public class RssFeedTimingAspect {
         }
     }
 
-    @Around("execution(* com.techbloghub.core.rss.application.RssService.syncFeeds(..)) && args(blog)")
+    @Around("execution(* com.techbloghub.core.rss.application.RssService.readRssFeeds(..)) && args(blog)")
     public Object measureFeedSyncTime(ProceedingJoinPoint joinPoint, Blog blog) throws Throwable {
         long startTime = System.currentTimeMillis();
         try {

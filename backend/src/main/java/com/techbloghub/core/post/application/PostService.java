@@ -46,13 +46,7 @@ public class PostService {
             .forEach(this::registerPost);
     }
 
-    private List<PostResponse> mapPostResponse(Page<Post> posts) {
-        return posts.stream()
-            .map(PostResponse::of)
-            .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true) // TODO: Cache 설정 필요 <-> 스케줄러 확인
+    @Transactional(readOnly = true) // TODO: Cache 설정 필요 <-> 스케줄러 확인, Rss 업데이트 날짜와 비교
     public Optional<LocalDateTime> getLatestPublishDate(Blog blog) {
         return postRepository.findLatestPublishDate(blog);
     }

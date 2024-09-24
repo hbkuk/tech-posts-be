@@ -22,7 +22,7 @@ public class RssService {
     private final PostService postService;
 
     @Transactional
-    public void syncFeeds(Blog blog) {
+    public void readRssFeeds(Blog blog) {
         List<RssFeed> rssFeeds = rssFeedReader.read(blog.getRssFeedUrl());
         Optional<LocalDateTime> latestPublishDate = postService.getLatestPublishDate(blog);
 

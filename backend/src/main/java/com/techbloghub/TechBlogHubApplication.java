@@ -40,7 +40,7 @@ class RssFeedController {
         
         Arrays.stream(Blog.values()).forEach(blog -> {
             try {
-                rssService.syncFeeds(blog);
+                rssService.readRssFeeds(blog);
                 log.info("Successfully synced feeds for blog: {}", blog.getEnglishName());
             } catch (Exception e) {
                 log.error("Failed to sync feeds for blog: {}", blog.getEnglishName(), e);
