@@ -58,8 +58,10 @@ naver:
   user:
     profile-uri: https://openapi.naver.com/v1/nid/me
 
-rss:
-  cron: "0 * * * * *"
+rss-feed:
+  scheduler:
+    reset: "0 */1 * * * *"     # 3분 마다 실행
+    read:  "10 * * * * *"      # 10초 마다 실행
 
 slack:
   webhook:
