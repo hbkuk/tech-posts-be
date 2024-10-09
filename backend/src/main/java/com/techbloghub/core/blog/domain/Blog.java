@@ -26,7 +26,7 @@ public enum Blog {
     왓챠("왓챠", "WATCHA", "https://medium.com/watcha", "https://medium.com/feed/watcha", "RSS"),
     하이퍼커넥트("하이퍼커넥트", "HYPERCONNECT", "https://hyperconnect.github.io", "https://hyperconnect.github.io/feed.xml", "ATOM"),
     쏘카("쏘카", "SOCAR", "https://tech.socarcorp.kr", "https://tech.socarcorp.kr/feed", "ATOM"),
-    리디("리디", "RIDI", "https://www.ridicorp.com", "https://www.ridicorp.com/feed", "RSS"),
+    리디("리디", "RIDI", "https://ridicorp.com/", "https://ridicorp.com/story-category/tech-blog/feed/", "RSS"),
     사람인("사람인", "SARAMIN", "https://saramin.github.io/", "https://saramin.github.io/feed.xml", "RSS"),
     여기어때("여기어때", "GCCOMPANY", "https://techblog.gccompany.co.kr/", "https://techblog.gccompany.co.kr/feed", "RSS"),
     SK플래닛("SK플래닛", "SKPLANET", "https://techtopic.skplanet.com/", "https://techtopic.skplanet.com/rss", "RSS"),
