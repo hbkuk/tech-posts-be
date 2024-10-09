@@ -2,6 +2,7 @@ package com.techbloghub.common.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.techbloghub.common.cache.CacheType;
+import java.util.Objects;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
@@ -17,6 +18,10 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableCaching
 public class CacheConfig {
+    
+    public void clearCache(CacheManager cacheManager, CacheType cacheType) {
+        Objects.requireNonNull(cacheManager.getCache(cacheType.getCacheName())).clear();
+    }
 
     @Bean
     public List<CaffeineCache> caffeineCaches() {

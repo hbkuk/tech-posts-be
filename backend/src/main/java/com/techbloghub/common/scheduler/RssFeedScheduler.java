@@ -1,5 +1,7 @@
 package com.techbloghub.common.scheduler;
 
+import com.techbloghub.common.cache.CacheType;
+import com.techbloghub.common.config.CacheConfig;
 import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.rss.application.RssService;
 import java.util.ArrayDeque;
@@ -7,6 +9,7 @@ import java.util.Arrays;
 import java.util.Queue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -19,6 +22,9 @@ public class RssFeedScheduler {
     
     private final RssService rssService;
     private final Queue<Blog> blogQueue = new ArrayDeque<>();
+    private final CacheManager cacheManager;
+    private final CacheConfig cacheConfig;
+    
     private boolean isQueueReset = false;
     
     /**
@@ -30,7 +36,8 @@ public class RssFeedScheduler {
         
         resetQueue();
         isQueueReset = true;
-        readRssFeeds();  // 큐 초기화 후 첫 번째 피드 읽기 시작
+        
+        cacheConfig.clearCache(cacheManager, CacheType.POST); // TODO 캐시 삭제 관련 다른 방법 찾아보기
     }
     
     /**
