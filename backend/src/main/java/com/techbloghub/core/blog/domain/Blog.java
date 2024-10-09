@@ -27,7 +27,14 @@ public enum Blog {
     하이퍼커넥트("하이퍼커넥트", "HYPERCONNECT", "https://hyperconnect.github.io", "https://hyperconnect.github.io/feed.xml", "ATOM"),
     쏘카("쏘카", "SOCAR", "https://tech.socarcorp.kr", "https://tech.socarcorp.kr/feed", "ATOM"),
     리디("리디", "RIDI", "https://www.ridicorp.com", "https://www.ridicorp.com/feed", "RSS"),
-    사람인("사람인", "SARAMIN", "https://saramin.github.io/", "https://saramin.github.io/feed.xml", "RSS");
+    사람인("사람인", "SARAMIN", "https://saramin.github.io/", "https://saramin.github.io/feed.xml", "RSS"),
+    여기어때("여기어때", "GCCOMPANY", "https://techblog.gccompany.co.kr/", "https://techblog.gccompany.co.kr/feed", "RSS"),
+    SK플래닛("SK플래닛", "SKPLANET", "https://techtopic.skplanet.com/", "https://techtopic.skplanet.com/rss", "RSS"),
+    지마켓("지마켓", "GMARKET", "https://dev.gmarket.com/", "https://dev.gmarket.com/rss", "RSS"),
+    올리브영("올리브영", "OLIVEYOUNG", "https://oliveyoung.tech/", "https://oliveyoung.tech/rss.xml", "RSS"),
+    펫프렌즈("펫프렌즈", "PETFRIENDS", "https://techblog.pet-friends.co.kr/", "https://techblog.pet-friends.co.kr/feed", "RSS"),
+    팔퍼센트("8퍼센트", "8PERCENT", "https://8percent.github.io/", "https://8percent.github.io/feed", "RSS");
+    
     
     private final String koreanName;
     private final String englishName;
