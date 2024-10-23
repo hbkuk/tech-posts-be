@@ -1,4 +1,4 @@
-package com.techbloghub.core.auth.fixture;
+package com.techbloghub.core.authentication.fixture;
 
 import com.techbloghub.common.exception.BadRequestException;
 import com.techbloghub.common.exception.common.ErrorCode;

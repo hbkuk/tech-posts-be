@@ -1,7 +1,7 @@
-package com.techbloghub.core.auth.util;
+package com.techbloghub.core.authentication.util;
 
 
-import com.techbloghub.core.auth.fixture.KakaoMemberFixture;
+import com.techbloghub.core.authentication.fixture.KakaoMemberFixture;
 import com.techbloghub.core.authentication.application.jwt.BearerAuthorizationExtractor;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoAccessTokenResponse;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoProfileResponse;

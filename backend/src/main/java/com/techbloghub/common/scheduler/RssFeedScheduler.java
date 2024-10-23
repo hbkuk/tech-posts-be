@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@Profile({"local", "dev", "prod"})
+@Profile({"dev", "prod"})
 public class RssFeedScheduler {
     
     private final RssService rssService;

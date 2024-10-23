@@ -3,7 +3,6 @@ package com.techbloghub.core.authentication.application.naver;
 import com.techbloghub.common.util.WebClientUtil;
 import com.techbloghub.core.authentication.application.OAuthProvider;
 import com.techbloghub.core.authentication.application.OauthUserProfile;
-import com.techbloghub.core.authentication.application.kakao.dto.KakaoAccessTokenResponse;
 import com.techbloghub.core.authentication.application.naver.dto.NaverAccessTokenRequest;
 import com.techbloghub.core.authentication.application.naver.dto.NaverAccessTokenResponse;
 import com.techbloghub.core.authentication.application.naver.dto.NaverProfileResponse;

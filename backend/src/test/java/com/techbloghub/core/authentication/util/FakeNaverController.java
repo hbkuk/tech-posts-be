@@ -1,9 +1,9 @@
-package com.techbloghub.core.auth.util;
+package com.techbloghub.core.authentication.util;
 
 
 import com.techbloghub.common.exception.BadRequestException;
 import com.techbloghub.common.exception.common.ErrorCode;
-import com.techbloghub.core.auth.fixture.NaverMemberFixture;
+import com.techbloghub.core.authentication.fixture.NaverMemberFixture;
 import com.techbloghub.core.authentication.application.jwt.BearerAuthorizationExtractor;
 import com.techbloghub.core.authentication.application.naver.NaverAuthProperties;
 import com.techbloghub.core.authentication.application.naver.dto.NaverAccessTokenResponse;

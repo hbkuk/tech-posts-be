@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class AccessTokenResponse {
+public class TokenResponse {
     
     private String accessToken;
     
-    public static AccessTokenResponse of(String accessToken) {
-        return new AccessTokenResponse(accessToken);
+    public static TokenResponse of(String accessToken) {
+        return new TokenResponse(accessToken);
     }
 }

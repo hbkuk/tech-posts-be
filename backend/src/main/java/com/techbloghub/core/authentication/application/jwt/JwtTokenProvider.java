@@ -6,7 +6,7 @@ import static com.techbloghub.common.exception.common.ErrorCode.INVALID_ACCESS_T
 import static com.techbloghub.common.exception.common.ErrorCode.INVALID_REFRESH_TOKEN;
 
 import com.techbloghub.common.exception.UnauthorizedException;
-import com.techbloghub.core.authentication.domain.MemberTokens;
+import com.techbloghub.core.authentication.domain.Tokens;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
@@ -32,10 +32,10 @@ public class JwtTokenProvider {
     @Value("${security.jwt.token.refresh-token-expire-length}")
     private Long refreshExpirationTime;
     
-    public MemberTokens generateLoginToken(String subject) {
+    public Tokens generateLoginToken(String subject) {
         final String refreshToken = createToken(EMPTY_SUBJECT, refreshExpirationTime);
         final String accessToken = createToken(subject, accessExpirationTime);
-        return new MemberTokens(refreshToken, accessToken);
+        return new Tokens(refreshToken, accessToken);
     }
     
     private String createToken(String subject, Long validityInMilliseconds) {

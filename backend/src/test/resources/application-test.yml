@@ -43,7 +43,7 @@ kakao:
     token-uri: /kakao/oauth/token
     client-id: tech-posts-test-kakao-client-id
     client-secret: tech-posts-test-kakao-client-secret
-    redirect-uri: /api/auth/kakao/callback
+    redirect-uri: /auth/kakao/callback
 
   user:
     profile-uri: /kakao/v2/user/me
@@ -53,7 +53,7 @@ naver:
     token-uri: /naver/oauth/token
     client-id: tech-posts-test-naver-client-id
     client-secret: tech-posts-test-naver-client-secret
-    redirect-uri: /api/auth/naver/callback
+    redirect-uri: /auth/naver/callback
 
   user:
     profile-uri: /naver/v1/nid/me

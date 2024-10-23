@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OAuthProviderCodeRequest {
+public class AuthorizationCodeRequest {
     
     @Schema(description = "인가 코드", example = "authorization_code")
     @NotBlank

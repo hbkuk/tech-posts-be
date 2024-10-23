@@ -1,6 +1,6 @@
-package com.techbloghub.core.auth.application;
+package com.techbloghub.core.authentication.application;
 
-import static com.techbloghub.core.auth.fixture.NaverMemberFixture.모든_네이버_회원_가져오기;
+import static com.techbloghub.core.authentication.fixture.NaverMemberFixture.모든_네이버_회원_가져오기;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -8,9 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.util.ApplicationTest;
 import com.techbloghub.common.util.WebClientUtil;
-import com.techbloghub.core.auth.fixture.NaverMemberFixture;
-import com.techbloghub.core.authentication.application.OauthUserProfile;
-import com.techbloghub.core.authentication.application.jwt.BearerAuthorizationExtractor;
+import com.techbloghub.core.authentication.fixture.NaverMemberFixture;
 import com.techbloghub.core.authentication.application.naver.NaverOauthProvider;
 import com.techbloghub.core.authentication.application.naver.dto.NaverAccessTokenResponse;
 import com.techbloghub.core.authentication.application.naver.dto.NaverProfileResponse;

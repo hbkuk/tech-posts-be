@@ -1,6 +1,6 @@
-package com.techbloghub.core.auth.application;
+package com.techbloghub.core.authentication.application;
 
-import static com.techbloghub.core.auth.fixture.KakaoMemberFixture.모든_카카오_회원_가져오기;
+import static com.techbloghub.core.authentication.fixture.KakaoMemberFixture.모든_카카오_회원_가져오기;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -8,13 +8,10 @@ import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.util.ApplicationTest;
 import com.techbloghub.common.util.WebClientUtil;
-import com.techbloghub.core.auth.fixture.KakaoMemberFixture;
-import com.techbloghub.core.authentication.application.OauthUserProfile;
+import com.techbloghub.core.authentication.fixture.KakaoMemberFixture;
 import com.techbloghub.core.authentication.application.kakao.KakaoOauthProvider;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoAccessTokenResponse;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoProfileResponse;
-import com.techbloghub.core.authentication.application.naver.dto.NaverProfileResponse;
-import com.techbloghub.core.authentication.application.naver.dto.NaverProfileResponse.NaverUserDetail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

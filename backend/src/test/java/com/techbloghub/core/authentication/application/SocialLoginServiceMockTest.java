@@ -1,24 +1,22 @@
-package com.techbloghub.core.auth.application;
+package com.techbloghub.core.authentication.application;
 
-import static com.techbloghub.core.auth.fixture.KakaoMemberFixture.어피치;
-import static com.techbloghub.core.auth.fixture.NaverMemberFixture.도레미;
+import static com.techbloghub.core.authentication.fixture.KakaoMemberFixture.어피치;
+import static com.techbloghub.core.authentication.fixture.NaverMemberFixture.도레미;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.util.ApplicationMockTest;
-import com.techbloghub.core.authentication.application.OauthProviders;
-import com.techbloghub.core.authentication.application.TokenService;
 import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
 import com.techbloghub.core.authentication.application.kakao.KakaoOauthProvider;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoProfileResponse;
 import com.techbloghub.core.authentication.application.naver.NaverOauthProvider;
 import com.techbloghub.core.authentication.application.naver.dto.NaverProfileResponse;
-import com.techbloghub.core.authentication.domain.MemberTokens;
+import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.domain.RefreshToken;
 import com.techbloghub.core.authentication.domain.RefreshTokenRepository;
-import com.techbloghub.core.authentication.presentation.dto.OAuthProviderCodeRequest;
+import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.application.MemberService;
 import com.techbloghub.core.member.domain.Member;
 import com.techbloghub.core.member.domain.OAuthProviderType;
@@ -30,10 +28,10 @@ import org.mockito.Mock;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @DisplayName("Toke 서비스 Mock 테스트")
-public class TokenServiceMockTest extends ApplicationMockTest {
+public class SocialLoginServiceMockTest extends ApplicationMockTest {
     
     @InjectMocks
-    TokenService tokenService;
+    SocialLoginService socialLoginService;
     
     @Mock
     OauthProviders oauthProviders;
@@ -71,11 +69,11 @@ public class TokenServiceMockTest extends ApplicationMockTest {
                 .thenReturn(어피치_회원_정보);
             
             when(jwtTokenProvider.generateLoginToken(어피치_회원_정보.getId().toString())).thenReturn(
-                new MemberTokens("Access Token", "Refresh Token"));
+                new Tokens("Access Token", "Refresh Token"));
             
             // when
-            OAuthProviderCodeRequest 카카오_인가_코드_요청_정보 = new OAuthProviderCodeRequest(어피치.인가_코드);
-            tokenService.generateToken("kakao", 카카오_인가_코드_요청_정보);
+            AuthorizationCodeRequest 카카오_인가_코드_요청_정보 = new AuthorizationCodeRequest(어피치.인가_코드);
+            socialLoginService.authenticate("kakao", 카카오_인가_코드_요청_정보);
             
             // then
             verify(kakaoOauthProvider, times(1)).getUserProfile(카카오_인가_코드_요청_정보.getCode());
@@ -104,11 +102,11 @@ public class TokenServiceMockTest extends ApplicationMockTest {
                 .thenReturn(도레미_회원_정보);
             
             when(jwtTokenProvider.generateLoginToken(도레미_회원_정보.getId().toString())).thenReturn(
-                new MemberTokens("Access Token", "Refresh Token"));
+                new Tokens("Access Token", "Refresh Token"));
             
             // when
-            OAuthProviderCodeRequest 네이버_인가_코드_요청_정보 = new OAuthProviderCodeRequest(도레미.인가_코드);
-            tokenService.generateToken("naver", 네이버_인가_코드_요청_정보);
+            AuthorizationCodeRequest 네이버_인가_코드_요청_정보 = new AuthorizationCodeRequest(도레미.인가_코드);
+            socialLoginService.authenticate("naver", 네이버_인가_코드_요청_정보);
             
             // then
             verify(naverOauthProvider, times(1)).getUserProfile(네이버_인가_코드_요청_정보.getCode());

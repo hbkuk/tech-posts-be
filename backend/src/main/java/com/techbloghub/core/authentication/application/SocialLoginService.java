@@ -1,10 +1,10 @@
 package com.techbloghub.core.authentication.application;
 
 import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
-import com.techbloghub.core.authentication.domain.MemberTokens;
+import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.domain.RefreshToken;
 import com.techbloghub.core.authentication.domain.RefreshTokenRepository;
-import com.techbloghub.core.authentication.presentation.dto.OAuthProviderCodeRequest;
+import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.application.MemberService;
 import com.techbloghub.core.member.domain.Member;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class TokenService {
+public class SocialLoginService {
     
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
@@ -21,22 +21,22 @@ public class TokenService {
     private final OauthProviders oauthProviders;
     
     @Transactional
-    public MemberTokens generateToken(String providerName, OAuthProviderCodeRequest request) {
+    public Tokens authenticate(String providerName, AuthorizationCodeRequest request) {
         OAuthProvider oAuthProvider = oauthProviders.map(providerName);
         OauthUserProfile userProfile = oAuthProvider.getUserProfile(
             request.getCode());
         Member member = memberService.findOrCreateMember(userProfile.getSocialId(),
             oAuthProvider.getOAuthProviderType());
         
-        MemberTokens memberTokens = jwtTokenProvider.generateLoginToken(member.getId().toString());
-        RefreshToken savedRefreshToken = new RefreshToken(memberTokens.getRefreshToken(),
+        Tokens tokens = jwtTokenProvider.generateLoginToken(member.getId().toString());
+        RefreshToken savedRefreshToken = new RefreshToken(tokens.getRefreshToken(),
             member.getId());
         refreshTokenRepository.save(savedRefreshToken);
-        return memberTokens;
+        return tokens;
     }
     
     @Transactional
-    public void removeRefreshToken(String refreshToken) {
+    public void invalidate(String refreshToken) {
         refreshTokenRepository.deleteByToken(refreshToken);
     }
 }

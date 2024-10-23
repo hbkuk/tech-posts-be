@@ -1,9 +1,9 @@
-package com.techbloghub.core.auth.step;
+package com.techbloghub.core.authentication.step;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.techbloghub.core.authentication.presentation.dto.OAuthProviderCodeRequest;
+import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.domain.OAuthProviderType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 
 public class AuthSteps {
     
-    public static ExtractableResponse<Response> 소셜_로그인_요청(OAuthProviderCodeRequest OAuth_제공자_코드_정보,
+    public static ExtractableResponse<Response> 소셜_로그인_요청(AuthorizationCodeRequest OAuth_제공자_코드_정보,
         OAuthProviderType OAuth_제공자_유형) {
         return given().log().all()
             .body(OAuth_제공자_코드_정보)

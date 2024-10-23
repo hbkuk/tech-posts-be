@@ -1,19 +1,19 @@
-package com.techbloghub.core.auth.acceptance;
+package com.techbloghub.core.authentication.presentation;
 
-import static com.techbloghub.core.auth.fixture.KakaoMemberFixture.라이언;
-import static com.techbloghub.core.auth.fixture.NaverMemberFixture.나나;
-import static com.techbloghub.core.auth.step.AuthSteps.로그아웃_요청;
-import static com.techbloghub.core.auth.step.AuthSteps.소셜_로그인_요청;
-import static com.techbloghub.core.auth.step.AuthSteps.실패하는_로그아웃_요청;
-import static com.techbloghub.core.auth.step.AuthSteps.실패하는_소셜_로그인_요청;
-import static com.techbloghub.core.auth.step.AuthSteps.토큰_확인;
+import static com.techbloghub.core.authentication.fixture.KakaoMemberFixture.라이언;
+import static com.techbloghub.core.authentication.fixture.NaverMemberFixture.나나;
+import static com.techbloghub.core.authentication.step.AuthSteps.로그아웃_요청;
+import static com.techbloghub.core.authentication.step.AuthSteps.소셜_로그인_요청;
+import static com.techbloghub.core.authentication.step.AuthSteps.실패하는_로그아웃_요청;
+import static com.techbloghub.core.authentication.step.AuthSteps.실패하는_소셜_로그인_요청;
+import static com.techbloghub.core.authentication.step.AuthSteps.토큰_확인;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.util.AcceptanceTest;
-import com.techbloghub.core.authentication.application.TokenService;
-import com.techbloghub.core.authentication.domain.MemberTokens;
-import com.techbloghub.core.authentication.presentation.dto.OAuthProviderCodeRequest;
+import com.techbloghub.core.authentication.application.SocialLoginService;
+import com.techbloghub.core.authentication.domain.Tokens;
+import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.domain.OAuthProviderType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @DisplayName("인증 인수 테스트")
-public class AuthAcceptanceTest extends AcceptanceTest {
+public class SocialAuthAcceptanceTest extends AcceptanceTest {
     
     @MockBean
-    TokenService tokenService;
+    SocialLoginService socialLoginService;
     
     @Nested
     class 로그인 {
@@ -42,10 +42,10 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 @Test
                 void 가입되지_않은_회원에게_토큰_발급() {
                     // given
-                    when(tokenService.generateToken(any(String.class), any(OAuthProviderCodeRequest.class)))
-                        .thenReturn(new MemberTokens("refresh-token", "access-token"));
+                    when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                        .thenReturn(new Tokens("refresh-token", "access-token"));
                     
-                    var 로그인_요청_정보 = new OAuthProviderCodeRequest(라이언.인가_코드);
+                    var 로그인_요청_정보 = new AuthorizationCodeRequest(라이언.인가_코드);
                     
                     // when
                     var 카카오_로그인_요청_응답 = 소셜_로그인_요청(로그인_요청_정보, OAuthProviderType.KAKAO);
@@ -83,10 +83,10 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                 @Test
                 void 가입되지_않은_회원에게_토큰_발급() {
                     // given
-                    when(tokenService.generateToken(any(String.class), any(OAuthProviderCodeRequest.class)))
-                        .thenReturn(new MemberTokens("refresh-token", "access-token"));
+                    when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                        .thenReturn(new Tokens("refresh-token", "access-token"));
                     
-                    var 로그인_요청_정보 = new OAuthProviderCodeRequest(나나.인가_코드);
+                    var 로그인_요청_정보 = new AuthorizationCodeRequest(나나.인가_코드);
                     
                     // when
                     var 네이버_로그인_요청_응답 = 소셜_로그인_요청(로그인_요청_정보, OAuthProviderType.NAVER);
@@ -128,10 +128,10 @@ public class AuthAcceptanceTest extends AcceptanceTest {
             @Test
             void 로그아웃_처리() {
                 // given
-                when(tokenService.generateToken(any(String.class), any(OAuthProviderCodeRequest.class)))
-                    .thenReturn(new MemberTokens("refresh-token", "access-token"));
+                when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                    .thenReturn(new Tokens("refresh-token", "access-token"));
                 
-                var 로그인_요청_정보 = new OAuthProviderCodeRequest(라이언.인가_코드);
+                var 로그인_요청_정보 = new AuthorizationCodeRequest(라이언.인가_코드);
                 var 카카오_로그인_요청_응답 = 소셜_로그인_요청(로그인_요청_정보, OAuthProviderType.KAKAO);
                 var 발급된_리프레시_토큰 = 카카오_로그인_요청_응답.cookie("refresh-token");
                 
