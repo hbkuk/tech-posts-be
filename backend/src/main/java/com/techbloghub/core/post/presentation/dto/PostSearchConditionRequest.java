@@ -1,5 +1,6 @@
 package com.techbloghub.core.post.presentation.dto;
 
+import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.PostSearchCondition;
 import com.techbloghub.core.post.domain.Sort;
 import jakarta.validation.constraints.Max;
@@ -28,10 +29,13 @@ public class PostSearchConditionRequest {
     @Max(32)
     private int itemsPerPage;
     
+    private String blog;
+    
     @Builder
-    public PostSearchConditionRequest(String sort, int itemsPerPage) {
+    public PostSearchConditionRequest(String sort, int itemsPerPage, String blog) {
         this.sort = sort;
         this.itemsPerPage = itemsPerPage;
+        this.blog = blog;
     }
     
     public PostSearchCondition toEntity() {
@@ -39,6 +43,7 @@ public class PostSearchConditionRequest {
             .sort(Sort.of(sort))
             .cursor(this.cursor)
             .itemsPerPage(this.itemsPerPage)
+            .blog(Blog.of(this.blog))
             .build();
     }
 }

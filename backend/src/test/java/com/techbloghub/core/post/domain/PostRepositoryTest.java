@@ -134,4 +134,33 @@ public class PostRepositoryTest extends RepositoryTest {
             () -> assertThat(마지막_페이지_결과.isHasMoreItems()).isFalse()
         );
     }
+    
+    @Test
+    void 블로그로_게시글_목록_조회() {
+        // given
+        List<Post> 생성된_라인_게시글_목록 = 게시글_테스트_데이터_생성하기(라인, 15);
+        postRepository.saveAll(생성된_라인_게시글_목록);
+        
+        List<Post> 생성된_카카오_게시글_목록 = 게시글_테스트_데이터_생성하기(카카오, 15);
+        postRepository.saveAll(생성된_카카오_게시글_목록);
+        
+        PostSearchCondition 검색_조건 = PostSearchCondition.builder()
+            .sort(Sort.LATEST)
+            .itemsPerPage(10)
+            .blog(카카오)
+            .build();
+        
+        // when
+        CursorPaged<Post> 검색_결과 = postRepository.findAllPostsByCondition(검색_조건);
+        
+        // then
+        assertAll(
+            () -> assertThat(검색_결과.getItems()).hasSize(10),
+            () -> assertThat(검색_결과.isHasMoreItems()).isTrue(),
+            () -> assertThat(검색_결과.getItems())
+                .isSortedAccordingTo(Comparator.comparing(Post::getPublishAt).reversed()), // 최신순 정렬 검증
+            () -> assertThat(검색_결과.getItems())
+                .allMatch(post -> post.getBlog().equals(카카오)) // Blog 조건 검증
+        );
+    }
 }

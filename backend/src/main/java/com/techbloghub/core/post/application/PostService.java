@@ -6,14 +6,11 @@ import com.techbloghub.core.post.application.dto.PostCreateRequest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
 import com.techbloghub.core.post.domain.PostSearchCondition;
-import com.techbloghub.core.post.presentation.dto.PostResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +21,9 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    @Cacheable(cacheNames = "post", key = "#condition.sort.toString() + '-' + #condition.cursor + '-' + #condition.itemsPerPage")
+    @Cacheable(
+        cacheNames = "post",
+        key = "#condition.sort.toString() + '-' + #condition.cursor + '-' + #condition.itemsPerPage + '-' + #condition.blog.getEnglishName()")
     public CursorPaged<Post> findAllByCondition(PostSearchCondition condition) {
         return postRepository.findAllPostsByCondition(condition);
     }
@@ -35,7 +34,7 @@ public class PostService {
     }
 
     @Transactional
-    public void registerPost(List<PostCreateRequest> requests) {
+    public void registerPosts(List<PostCreateRequest> requests) {
         requests.stream()
             .map(request -> new Post(
                 request.getBlog(),

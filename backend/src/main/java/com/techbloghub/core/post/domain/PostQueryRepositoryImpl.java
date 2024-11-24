@@ -3,6 +3,7 @@ package com.techbloghub.core.post.domain;
 import static com.techbloghub.core.post.domain.QPost.post;
 
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.StringExpression;
@@ -35,7 +36,8 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         List<Post> posts = queryFactory
             .selectFrom(post)
             .where(
-                customCursor(condition.getCursor(), condition.getSort())
+                customCursor(condition.getCursor(), condition.getSort()),
+                blogFilter(condition.getBlog())
             )
             .orderBy(getOrderSpecifier(condition.getSort()))
             .limit(condition.getItemsPerPage() + 1)  // 한 페이지에 더 많은 항목 가져옴.
@@ -146,6 +148,10 @@ public class PostQueryRepositoryImpl implements PostQueryRepository {
         
         // 기본적으로 최신 게시글 기준으로 비교
         return cursorValue.gt(cursor);
+    }
+    
+    private BooleanExpression blogFilter(Blog blog) {
+        return blog != null ? post.blog.eq(blog) : null;
     }
 }
 

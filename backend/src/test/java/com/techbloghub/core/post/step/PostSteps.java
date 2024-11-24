@@ -2,6 +2,7 @@ package com.techbloghub.core.post.step;
 
 import static io.restassured.RestAssured.given;
 
+import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.Sort;
 import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import io.restassured.response.ExtractableResponse;
@@ -29,11 +30,15 @@ public class PostSteps {
         }
         
         if (request.getCursor() != null) {
-            파라미터_목록.put("lastId", String.valueOf(request.getCursor()));
+            파라미터_목록.put("lastId", request.getCursor());
         }
         
         if (request.getItemsPerPage() > 0) {
             파라미터_목록.put("itemsPerPage", String.valueOf(request.getItemsPerPage()));
+        }
+        
+        if (request.getBlog() != null) {
+            파라미터_목록.put("blog", request.getBlog());
         }
         
         return given().log().all()
@@ -45,6 +50,12 @@ public class PostSteps {
             .extract();
     }
     
+    public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(int itemsPerPage) {
+        return PostSearchConditionRequest.builder()
+            .itemsPerPage(itemsPerPage)
+            .build();
+    }
+    
     public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(Sort sort, int itemPerPage) {
         return PostSearchConditionRequest.builder()
             .sort(sort.name())
@@ -52,9 +63,11 @@ public class PostSteps {
             .build();
     }
     
-    public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(int itemsPerPage) {
+    public static PostSearchConditionRequest 게시글_목록_요청_조건_생성(Sort sort, int itemPerPage, Blog blog) {
         return PostSearchConditionRequest.builder()
-            .itemsPerPage(itemsPerPage)
+            .sort(sort.name())
+            .itemsPerPage(itemPerPage)
+            .blog(blog.getEnglishName())
             .build();
     }
 }

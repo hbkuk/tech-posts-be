@@ -23,7 +23,7 @@ public class PostController {
     private final PostService postService;
     
     @GetMapping("/api/posts")
-    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute @ParameterObject PostSearchConditionRequest request) {
+    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute PostSearchConditionRequest request) {
         CursorPaged<Post> cursorPaged = postService.findAllByCondition(request.toEntity());
         return ResponseEntity.ok(convertResponse(cursorPaged));
     }

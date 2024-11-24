@@ -1,6 +1,7 @@
 package com.techbloghub.core.post.acceptance;
 
 import static com.techbloghub.core.blog.domain.Blog.우아한형제들;
+import static com.techbloghub.core.blog.domain.Blog.카카오;
 import static com.techbloghub.core.post.step.PostSteps.게시글_목록_요청;
 import static com.techbloghub.core.post.step.PostSteps.게시글_목록_요청_조건_생성;
 import static com.techbloghub.core.post.step.PostSteps.실패하는_게시글_목록_요청;
@@ -11,6 +12,7 @@ import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
 import com.techbloghub.core.post.domain.Sort;
+import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -56,6 +58,26 @@ public class PostAcceptanceTest extends AcceptanceTest {
             // then
             게시글_목록_요청(게시글_목록_요청_조건);
         }
+        
+        /**
+          * Given 게시글을 등록한다.
+          * When  블로그명으로 게시글 목록을 요청한다.
+          * Then  게시글 목록이 응답된다.
+          */
+        @Test
+        void 블로그명으로_게시글_목록_요청() {
+            // given
+            개수만큼_게시글_등록(우아한형제들, 20);
+            개수만큼_게시글_등록(카카오, 20);
+            
+            // when
+            var 게시글_목록_요청_조건 = 게시글_목록_요청_조건_생성(Sort.LATEST, 12, 카카오);
+            
+            // then
+            게시글_목록_요청(게시글_목록_요청_조건);
+        }
+        
+        
         
         
         private void 개수만큼_게시글_등록(Blog 블로그, int 개수) {
