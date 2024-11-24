@@ -60,7 +60,7 @@ public class RssServiceMockTest {
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);
-            verify(postService, times(1)).registerPost(anyList());
+            verify(postService, times(1)).registerPosts(anyList());
         }
 
         @Test
@@ -87,7 +87,7 @@ public class RssServiceMockTest {
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);
-            verify(postService, times(1)).registerPost(anyList());
+            verify(postService, times(1)).registerPosts(anyList());
         }
 
         @Test
@@ -114,7 +114,7 @@ public class RssServiceMockTest {
 
             // then
             verify(postService, times(1)).getLatestPublishDate(컬리);
-            verify(postService, never()).registerPost(anyList());
+            verify(postService, never()).registerPosts(anyList());
         }
     }
 }

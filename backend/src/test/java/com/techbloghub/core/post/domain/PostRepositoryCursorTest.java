@@ -13,8 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@DisplayName("게시글 Repository 테스트")
-public class PostRepositoryImplTest extends RepositoryTest {
+@DisplayName("게시글 Repository Cursor 테스트")
+public class PostRepositoryCursorTest extends RepositoryTest {
     
     @Autowired
     PostRepository postRepository;

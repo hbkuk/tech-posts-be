@@ -28,7 +28,7 @@ public class RssService {
 
         List<PostCreateRequest> createRequests = getPostCreateRequests(blog, rssFeeds, latestPublishDate);
         if (!createRequests.isEmpty()) {
-            postService.registerPost(createRequests);
+            postService.registerPosts(createRequests);
         }
     }
 
