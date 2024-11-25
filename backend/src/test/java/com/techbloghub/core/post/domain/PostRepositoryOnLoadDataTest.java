@@ -4,20 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.techbloghub.common.domain.pagination.CursorPaged;
+import com.techbloghub.common.util.RepositoryTest;
 import com.techbloghub.core.post.application.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-@DirtiesContext // TODO 다른 방법 없는지?
+@DisplayName("Post Repository 데이터 로드 상태 테스트")
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DisplayName("Post Repository 데이터 로드 상태 테스트")
 public class PostRepositoryOnLoadDataTest {
     
     @Autowired

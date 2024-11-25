@@ -23,7 +23,7 @@ public class PostService {
     @Transactional(readOnly = true)
     @Cacheable(
         cacheNames = "post",
-        key = "#condition.sort.toString() + '-' + #condition.cursor + '-' + #condition.itemsPerPage + '-' + #condition.blog.getEnglishName()")
+        key = "#condition.sort.toString() + '-' + #condition.cursor + '-' + #condition.itemsPerPage + '-' + (#condition.blog != null ? #condition.blog.getEnglishName() : 'unknown')")
     public CursorPaged<Post> findAllByCondition(PostSearchCondition condition) {
         return postRepository.findAllPostsByCondition(condition);
     }
