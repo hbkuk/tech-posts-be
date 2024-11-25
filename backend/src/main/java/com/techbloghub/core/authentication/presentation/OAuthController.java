@@ -2,7 +2,7 @@ package com.techbloghub.core.authentication.presentation;
 
 import static org.springframework.http.HttpHeaders.SET_COOKIE;
 
-import com.techbloghub.core.authentication.application.SocialLoginService;
+import com.techbloghub.core.authentication.application.OAuthService;
 import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.presentation.dto.TokenResponse;
 import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "인증")
 @RestController
 @RequiredArgsConstructor
-public class SocialLoginController {
+public class OAuthController {
     
     public static final int COOKIE_AGE_SECONDS = 604800;
     
-    private final SocialLoginService socialLoginService;
+    private final OAuthService OAuthService;
     
     @Operation(summary = "소셜 로그인")
     @PostMapping("/api/social-login/{provider}")
@@ -37,7 +37,7 @@ public class SocialLoginController {
         @Parameter(description = "Social 로그인 제공자명", example = "google") @PathVariable String provider,
         @Parameter(description = "인가 코드") @Valid @RequestBody AuthorizationCodeRequest request,
         HttpServletResponse response) {
-        Tokens tokens = socialLoginService.authenticate(provider, request);
+        Tokens tokens = OAuthService.authenticate(provider, request);
         
         final ResponseCookie cookie = ResponseCookie.from("refresh-token",
                 tokens.getRefreshToken())
@@ -54,7 +54,7 @@ public class SocialLoginController {
     @Operation(summary = "로그아웃")
     @DeleteMapping("/api/social-logout")
     public ResponseEntity<Void> socialLogout(@Parameter(hidden = true) @CookieValue("refresh-token") String refreshToken) {
-        socialLoginService.invalidate(refreshToken);
+        OAuthService.invalidate(refreshToken);
         return ResponseEntity.noContent().build();
     }
 }

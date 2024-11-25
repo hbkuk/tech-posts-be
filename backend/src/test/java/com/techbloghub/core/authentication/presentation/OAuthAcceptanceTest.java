@@ -2,16 +2,16 @@ package com.techbloghub.core.authentication.presentation;
 
 import static com.techbloghub.core.authentication.fixture.KakaoMemberFixture.라이언;
 import static com.techbloghub.core.authentication.fixture.NaverMemberFixture.나나;
-import static com.techbloghub.core.authentication.step.AuthSteps.로그아웃_요청;
-import static com.techbloghub.core.authentication.step.AuthSteps.소셜_로그인_요청;
-import static com.techbloghub.core.authentication.step.AuthSteps.실패하는_로그아웃_요청;
-import static com.techbloghub.core.authentication.step.AuthSteps.실패하는_소셜_로그인_요청;
-import static com.techbloghub.core.authentication.step.AuthSteps.토큰_확인;
+import static com.techbloghub.core.authentication.step.OAuthSteps.로그아웃_요청;
+import static com.techbloghub.core.authentication.step.OAuthSteps.소셜_로그인_요청;
+import static com.techbloghub.core.authentication.step.OAuthSteps.실패하는_로그아웃_요청;
+import static com.techbloghub.core.authentication.step.OAuthSteps.실패하는_소셜_로그인_요청;
+import static com.techbloghub.core.authentication.step.OAuthSteps.토큰_확인;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.util.AcceptanceTest;
-import com.techbloghub.core.authentication.application.SocialLoginService;
+import com.techbloghub.core.authentication.application.OAuthService;
 import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.domain.OAuthProviderType;
@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @DisplayName("인증 인수 테스트")
-public class SocialAuthAcceptanceTest extends AcceptanceTest {
+public class OAuthAcceptanceTest extends AcceptanceTest {
     
     @MockBean
-    SocialLoginService socialLoginService;
+    OAuthService OAuthService;
     
     @Nested
     class 로그인 {
@@ -42,7 +42,7 @@ public class SocialAuthAcceptanceTest extends AcceptanceTest {
                 @Test
                 void 가입되지_않은_회원에게_토큰_발급() {
                     // given
-                    when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                    when(OAuthService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
                         .thenReturn(new Tokens("refresh-token", "access-token"));
                     
                     var 로그인_요청_정보 = new AuthorizationCodeRequest(라이언.인가_코드);
@@ -83,7 +83,7 @@ public class SocialAuthAcceptanceTest extends AcceptanceTest {
                 @Test
                 void 가입되지_않은_회원에게_토큰_발급() {
                     // given
-                    when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                    when(OAuthService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
                         .thenReturn(new Tokens("refresh-token", "access-token"));
                     
                     var 로그인_요청_정보 = new AuthorizationCodeRequest(나나.인가_코드);
@@ -128,7 +128,7 @@ public class SocialAuthAcceptanceTest extends AcceptanceTest {
             @Test
             void 로그아웃_처리() {
                 // given
-                when(socialLoginService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
+                when(OAuthService.authenticate(any(String.class), any(AuthorizationCodeRequest.class)))
                     .thenReturn(new Tokens("refresh-token", "access-token"));
                 
                 var 로그인_요청_정보 = new AuthorizationCodeRequest(라이언.인가_코드);

@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-public class AuthSteps {
+public class OAuthSteps {
     
     public static ExtractableResponse<Response> 소셜_로그인_요청(AuthorizationCodeRequest OAuth_제공자_코드_정보,
         OAuthProviderType OAuth_제공자_유형) {

@@ -28,10 +28,10 @@ import org.mockito.Mock;
 import org.springframework.test.util.ReflectionTestUtils;
 
 @DisplayName("Toke 서비스 Mock 테스트")
-public class SocialLoginServiceMockTest extends ApplicationMockTest {
+public class OAuthServiceMockTest extends ApplicationMockTest {
     
     @InjectMocks
-    SocialLoginService socialLoginService;
+    OAuthService OAuthService;
     
     @Mock
     OauthProviders oauthProviders;
@@ -73,7 +73,7 @@ public class SocialLoginServiceMockTest extends ApplicationMockTest {
             
             // when
             AuthorizationCodeRequest 카카오_인가_코드_요청_정보 = new AuthorizationCodeRequest(어피치.인가_코드);
-            socialLoginService.authenticate("kakao", 카카오_인가_코드_요청_정보);
+            OAuthService.authenticate("kakao", 카카오_인가_코드_요청_정보);
             
             // then
             verify(kakaoOauthProvider, times(1)).getUserProfile(카카오_인가_코드_요청_정보.getCode());
@@ -106,7 +106,7 @@ public class SocialLoginServiceMockTest extends ApplicationMockTest {
             
             // when
             AuthorizationCodeRequest 네이버_인가_코드_요청_정보 = new AuthorizationCodeRequest(도레미.인가_코드);
-            socialLoginService.authenticate("naver", 네이버_인가_코드_요청_정보);
+            OAuthService.authenticate("naver", 네이버_인가_코드_요청_정보);
             
             // then
             verify(naverOauthProvider, times(1)).getUserProfile(네이버_인가_코드_요청_정보.getCode());

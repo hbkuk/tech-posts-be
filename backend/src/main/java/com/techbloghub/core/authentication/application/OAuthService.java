@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class SocialLoginService {
+public class OAuthService {
     
     private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
