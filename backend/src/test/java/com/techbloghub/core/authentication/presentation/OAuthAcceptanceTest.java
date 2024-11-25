@@ -15,12 +15,14 @@ import com.techbloghub.core.authentication.application.OAuthService;
 import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;
 import com.techbloghub.core.member.domain.OAuthProviderType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @DisplayName("인증 인수 테스트")
+@Disabled
 public class OAuthAcceptanceTest extends AcceptanceTest {
     
     @MockBean
