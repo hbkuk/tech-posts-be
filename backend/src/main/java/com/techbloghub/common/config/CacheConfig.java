@@ -14,9 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @EnableCaching
+@Profile("!local")
 public class CacheConfig {
     
     public void clearCache(CacheManager cacheManager, CacheType cacheType) {

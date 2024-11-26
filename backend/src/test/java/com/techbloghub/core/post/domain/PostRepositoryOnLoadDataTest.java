@@ -40,6 +40,8 @@ public class PostRepositoryOnLoadDataTest {
         페이지_검증(두번째_페이지_결과, 세번째_페이지_결과);
     }
     
+    // TODO.Test - Full Text Search
+    
     private CursorPaged<Post> 페이지_요청(String cursor, int itemsPerPage, boolean expectedHasMore) {
         PostSearchCondition condition = PostSearchCondition.builder()
             .cursor(cursor)

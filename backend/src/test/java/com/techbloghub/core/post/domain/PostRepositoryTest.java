@@ -162,4 +162,14 @@ public class PostRepositoryTest extends RepositoryTest {
                 .allMatch(post -> post.getBlog().equals(카카오))
         );
     }
+    
+    // TODO.Test - Full Text Search
+    @Test
+    void 검색어로_게시글_목록_조회() {
+        // given
+        
+        // when
+    
+        // then
+    }
 }

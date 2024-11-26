@@ -33,7 +33,8 @@ public enum Blog {
     지마켓("지마켓", "GMARKET", "https://dev.gmarket.com/", "https://dev.gmarket.com/rss", "RSS"),
     올리브영("올리브영", "OLIVEYOUNG", "https://oliveyoung.tech/", "https://oliveyoung.tech/rss.xml", "RSS"),
     펫프렌즈("펫프렌즈", "PETFRIENDS", "https://techblog.pet-friends.co.kr/", "https://techblog.pet-friends.co.kr/feed", "RSS"),
-    팔퍼센트("8퍼센트", "8PERCENT", "https://8percent.github.io/", "https://8percent.github.io/feed", "RSS");
+    팔퍼센트("8퍼센트", "8PERCENT", "https://8percent.github.io/", "https://8percent.github.io/feed", "RSS"),
+    테이블링("테이블링", "TABLING", "https://techblog.tabling.co.kr/", "https://techblog.tabling.co.kr/feed", "RSS");
     
     
     private final String koreanName;

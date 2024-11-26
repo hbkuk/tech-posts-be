@@ -8,6 +8,7 @@ import com.techbloghub.core.post.application.PostService;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.presentation.dto.PostResponse;
 import com.techbloghub.core.post.presentation.dto.PostSearchConditionRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -22,8 +23,9 @@ public class PostController {
 
     private final PostService postService;
     
+    @Operation(summary = "게시글 목록 조회")
     @GetMapping("/api/posts")
-    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute PostSearchConditionRequest request) {
+    public ResponseEntity<CursorPagedResponse<PostResponse>> findAllPosts(@Valid @ModelAttribute @ParameterObject PostSearchConditionRequest request) {
         CursorPaged<Post> cursorPaged = postService.findAllByCondition(request.toEntity());
         return ResponseEntity.ok(convertResponse(cursorPaged));
     }
