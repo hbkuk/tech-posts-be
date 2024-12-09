@@ -23,18 +23,6 @@ public class RssFeedTimingAspect {
     @Value("${slack.webhook.rss-reader-url}")
     private String hookUri;
 
-    @Around("@annotation(com.techbloghub.common.alert.rss.SlackInfoLogger)")
-    public Object sendTotalReadingTime(ProceedingJoinPoint joinPoint) throws Throwable {
-        long totalStartTime = System.currentTimeMillis();
-        try {
-            return joinPoint.proceed();
-        } finally {
-            long totalDuration = System.currentTimeMillis() - totalStartTime;
-            log.info(String.format(TOTAL_TIMING_TEMPLATE, totalDuration));
-            alertSender.send(String.format(TOTAL_TIMING_TEMPLATE, totalDuration), hookUri);
-        }
-    }
-
     @Around("execution(* com.techbloghub.core.rss.application.RssService.readRssFeeds(..)) && args(blog)")
     public Object measureFeedSyncTime(ProceedingJoinPoint joinPoint, Blog blog) throws Throwable {
         long startTime = System.currentTimeMillis();
@@ -48,7 +36,7 @@ public class RssFeedTimingAspect {
         } finally {
             long duration = System.currentTimeMillis() - startTime;
             String successMessage = RssMessageGenerator.generateSuccessMessage(blog.getEnglishName(), duration);
-            log.info(successMessage);
+            log.debug(successMessage);
             alertSender.send(successMessage, hookUri);
         }
     }

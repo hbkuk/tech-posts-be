@@ -38,7 +38,7 @@ public class RssFeed {
 
     private LocalDateTime getLocalDateTime(String pubDate) {
         try {
-            log.info("pubDate : {}", pubDate);
+            log.debug("pubDate : {}", pubDate);
             return LocalDateTime.parse(DateConverter.convertToIso8601(pubDate));
         } catch (ParseException e) {
             log.error("Error parsing", e);
