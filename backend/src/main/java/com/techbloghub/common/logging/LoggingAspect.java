@@ -49,7 +49,7 @@ public class LoggingAspect {
     @Before("getMapping() || postMapping() || putMapping()")
     public void requestLog(final JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
-        log.info("[ REQUEST ] Controller - {}, Method - {}, Arguments - {}",
+        log.debug("[ REQUEST ] Controller - {}, Method - {}, Arguments - {}",
                 joinPoint.getTarget().getClass().getSimpleName(),
                 signature.getName(),
                 Arrays.toString(joinPoint.getArgs()));
@@ -64,7 +64,7 @@ public class LoggingAspect {
     @AfterReturning(value = "controllerPointCut() || exceptionHandlerCut()", returning = "response")
     public void responseLog(final JoinPoint joinPoint, final ResponseEntity<?> response) {
         Signature signature = joinPoint.getSignature();
-        log.info("[ RESPONSE ] Controller - {}, Method - {}, returnBody - {}",
+        log.debug("[ RESPONSE ] Controller - {}, Method - {}, returnBody - {}",
                 joinPoint.getTarget().getClass().getSimpleName(),
                 signature.getName(),
                 response.getBody());

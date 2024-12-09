@@ -36,7 +36,7 @@ class RssFeedController {
     
     @GetMapping("/api/rss/sync")
     public String syncAllFeeds() {
-        log.info("Manual RSS feed sync started");
+        log.debug("Manual RSS feed sync started");
         
         Arrays.stream(Blog.values()).forEach(blog -> {
             try {
