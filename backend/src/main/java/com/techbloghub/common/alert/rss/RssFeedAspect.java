@@ -1,7 +1,5 @@
 package com.techbloghub.common.alert.rss;
 
-import static com.techbloghub.common.alert.rss.RssMessageGenerator.TOTAL_TIMING_TEMPLATE;
-
 import com.techbloghub.common.alert.sender.AlertSender;
 import com.techbloghub.core.blog.domain.Blog;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class RssFeedTimingAspect {
+public class RssFeedAspect {
 
     private final AlertSender alertSender;
 
@@ -24,20 +22,13 @@ public class RssFeedTimingAspect {
     private String hookUri;
 
     @Around("execution(* com.techbloghub.core.rss.application.RssService.readRssFeeds(..)) && args(blog)")
-    public Object measureFeedSyncTime(ProceedingJoinPoint joinPoint, Blog blog) throws Throwable {
-        long startTime = System.currentTimeMillis();
+    public Object notifyErrorMessage(ProceedingJoinPoint joinPoint, Blog blog) throws Throwable {
         try {
             return joinPoint.proceed();
         } catch (Exception e) {
             String errorMessage = RssMessageGenerator.generateErrorMessage(e);
-            log.error(errorMessage);
             alertSender.send(errorMessage, hookUri);
             throw e;
-        } finally {
-            long duration = System.currentTimeMillis() - startTime;
-            String successMessage = RssMessageGenerator.generateSuccessMessage(blog.getEnglishName(), duration);
-            log.debug(successMessage);
-            alertSender.send(successMessage, hookUri);
         }
     }
 }
