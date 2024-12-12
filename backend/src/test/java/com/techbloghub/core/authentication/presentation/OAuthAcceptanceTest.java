@@ -10,7 +10,7 @@ import static com.techbloghub.core.authentication.step.OAuthSteps.토큰_확인;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.techbloghub.common.util.AcceptanceTest;
+import com.techbloghub.common.AcceptanceTest;
 import com.techbloghub.core.authentication.application.OAuthService;
 import com.techbloghub.core.authentication.domain.Tokens;
 import com.techbloghub.core.authentication.presentation.dto.AuthorizationCodeRequest;

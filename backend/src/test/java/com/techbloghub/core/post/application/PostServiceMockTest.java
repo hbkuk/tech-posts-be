@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.techbloghub.common.domain.pagination.CursorPaged;
-import com.techbloghub.common.util.ApplicationTest;
+import com.techbloghub.common.ApplicationTest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostQueryRepositoryImpl;
 import com.techbloghub.core.post.domain.PostSearchCondition;

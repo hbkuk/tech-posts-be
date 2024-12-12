@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import com.techbloghub.common.util.ApplicationTest;
+import com.techbloghub.common.ApplicationTest;
 import com.techbloghub.common.util.WebClientUtil;
 import com.techbloghub.core.authentication.fixture.KakaoMemberFixture;
 import com.techbloghub.core.authentication.application.kakao.KakaoOauthProvider;

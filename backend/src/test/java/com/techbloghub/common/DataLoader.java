@@ -1,4 +1,4 @@
-package com.techbloghub.common.util;
+package com.techbloghub.common;
 
 import org.springframework.stereotype.Component;
 

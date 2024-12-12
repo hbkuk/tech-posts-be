@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.techbloghub.common.domain.pagination.CursorPaged;
-import com.techbloghub.common.util.RepositoryTest;
 import com.techbloghub.core.post.application.PostService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

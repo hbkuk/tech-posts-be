@@ -1,4 +1,4 @@
-package com.techbloghub.common.util;
+package com.techbloghub.common;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;

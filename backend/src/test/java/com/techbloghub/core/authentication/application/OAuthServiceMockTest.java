@@ -7,7 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.techbloghub.common.util.ApplicationMockTest;
+import com.techbloghub.common.ApplicationMockTest;
 import com.techbloghub.core.authentication.application.jwt.JwtTokenProvider;
 import com.techbloghub.core.authentication.application.kakao.KakaoOauthProvider;
 import com.techbloghub.core.authentication.application.kakao.dto.KakaoProfileResponse;

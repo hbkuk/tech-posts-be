@@ -1,6 +1,6 @@
 package com.techbloghub.core.post.application;
 
-import com.techbloghub.common.util.ApplicationTest;
+import com.techbloghub.common.ApplicationTest;
 import com.techbloghub.core.post.domain.Post;
 import com.techbloghub.core.post.domain.PostRepository;
 import org.junit.jupiter.api.DisplayName;

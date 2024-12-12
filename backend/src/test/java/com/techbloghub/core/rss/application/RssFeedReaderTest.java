@@ -2,7 +2,7 @@ package com.techbloghub.core.rss.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.techbloghub.common.util.ApplicationTest;
+import com.techbloghub.common.ApplicationTest;
 import com.techbloghub.core.blog.domain.Blog;
 import com.techbloghub.core.rss.domain.RssFeed;
 import java.util.Arrays;

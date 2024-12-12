@@ -1,23 +1,31 @@
-package com.techbloghub.common.util;
+package com.techbloghub.common;
 
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RepositoryTest {
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class AcceptanceTest extends TestContainer {
+
+    @LocalServerPort
+    private int port;
 
     @Autowired
     private DatabaseCleanup databaseCleanup;
+
     @Autowired
     private DataLoader dataLoader;
 
     @BeforeEach
-    public void 사전_데이터베이스_초기화() {
+    public void setUp() {
+        RestAssured.port = port;
+
         databaseCleanup.execute();
         dataLoader.loadData();
     }
-
 }

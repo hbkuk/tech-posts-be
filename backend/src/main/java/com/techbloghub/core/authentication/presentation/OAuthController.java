@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Tag(name = "인증")
+@Tag(name = "OAuth 인증")
 @RestController
 @RequiredArgsConstructor
 public class OAuthController {
@@ -32,14 +32,13 @@ public class OAuthController {
     private final OAuthService OAuthService;
     
     @Operation(summary = "소셜 로그인")
-    @PostMapping("/api/social-login/{provider}")
-    public ResponseEntity<TokenResponse> socialLogin(
-        @Parameter(description = "Social 로그인 제공자명", example = "google") @PathVariable String provider,
-        @Parameter(description = "인가 코드") @Valid @RequestBody AuthorizationCodeRequest request,
+    @PostMapping("/api/oauth-login/{provider}")
+    public ResponseEntity<TokenResponse> oauthLogin(
+        @PathVariable String provider, @Valid @RequestBody AuthorizationCodeRequest request,
         HttpServletResponse response) {
         Tokens tokens = OAuthService.authenticate(provider, request);
         
-        final ResponseCookie cookie = ResponseCookie.from("refresh-token",
+        ResponseCookie cookie = ResponseCookie.from("refresh-token",
                 tokens.getRefreshToken())
             .maxAge(COOKIE_AGE_SECONDS)
             .sameSite("None")
@@ -52,8 +51,8 @@ public class OAuthController {
     }
     
     @Operation(summary = "로그아웃")
-    @DeleteMapping("/api/social-logout")
-    public ResponseEntity<Void> socialLogout(@Parameter(hidden = true) @CookieValue("refresh-token") String refreshToken) {
+    @DeleteMapping("/api/oauth-logout")
+    public ResponseEntity<Void> oauthLogout(@Parameter(hidden = true) @CookieValue("refresh-token") String refreshToken) {
         OAuthService.invalidate(refreshToken);
         return ResponseEntity.noContent().build();
     }

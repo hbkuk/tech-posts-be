@@ -1,4 +1,4 @@
-package com.techbloghub.common.util;
+package com.techbloghub.common;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApplicationTest {
+public class RepositoryTest extends TestContainer {
 
     @Autowired
     private DatabaseCleanup databaseCleanup;

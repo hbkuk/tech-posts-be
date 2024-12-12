@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.techbloghub.common.domain.pagination.CursorPaged;
-import com.techbloghub.common.util.RepositoryTest;
+import com.techbloghub.common.RepositoryTest;
 import java.util.Comparator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
